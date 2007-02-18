@@ -1,0 +1,749 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2006-03-18 17:16+0100\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=CHARSET\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: ../editor.php:40
+msgid "Start X:"
+msgstr ""
+
+#: ../editor.php:41
+msgid "Start Y:"
+msgstr ""
+
+#: ../editor.php:42 ../editor.php:51
+msgid "Width:"
+msgstr ""
+
+#: ../editor.php:43 ../editor.php:52
+msgid "Height:"
+msgstr ""
+
+#: ../editor.php:46 ../editor.php:58 ../editor.php:80 ../editor.php:125
+#: ../manager.php:153 ../newfolder.php:73
+msgid "OK"
+msgstr ""
+
+#: ../editor.php:47 ../editor.php:59 ../editor.php:81 ../editor.php:126
+#: ../manager.php:154 ../newfolder.php:74
+msgid "Cancel"
+msgstr ""
+
+#: ../editor.php:52
+msgid "Lock"
+msgstr ""
+
+#: ../editor.php:55 ../manager.php:67 ../manager.php:88 ../manager.php:119
+msgid "Constrain Proportions"
+msgstr ""
+
+#: ../editor.php:64
+msgid "Flip Image"
+msgstr ""
+
+#: ../editor.php:66
+msgid "Flip Horizontal"
+msgstr ""
+
+#: ../editor.php:67
+msgid "Flip Virtical"
+msgstr ""
+
+#: ../editor.php:70
+msgid "Rotate Image"
+msgstr ""
+
+#: ../editor.php:73
+msgid "Rotate 180 &deg;"
+msgstr ""
+
+#: ../editor.php:74
+msgid "Rotate 90 &deg; CW"
+msgstr ""
+
+#: ../editor.php:75
+msgid "Rotate 90 &deg; CCW"
+msgstr ""
+
+#: ../editor.php:77
+msgid "Angle:"
+msgstr ""
+
+#: ../editor.php:85
+msgid "X:"
+msgstr ""
+
+#: ../editor.php:86
+msgid "Y:"
+msgstr ""
+
+#: ../editor.php:88
+msgid "W:"
+msgstr ""
+
+#: ../editor.php:89
+msgid "H:"
+msgstr ""
+
+#: ../editor.php:91
+msgid "A:"
+msgstr ""
+
+#: ../editor.php:92
+msgid "D:"
+msgstr ""
+
+#: ../editor.php:99
+msgid "Filename:"
+msgstr ""
+
+#: ../editor.php:101
+msgid "Image Format"
+msgstr ""
+
+#: ../editor.php:103
+msgid "JPEG High"
+msgstr ""
+
+#: ../editor.php:104
+msgid "JPEG Medium"
+msgstr ""
+
+#: ../editor.php:105
+msgid "JPEG Low"
+msgstr ""
+
+#: ../editor.php:106
+msgid "PNG"
+msgstr ""
+
+#: ../editor.php:108
+msgid "GIF"
+msgstr ""
+
+#: ../editor.php:111
+msgid "Quality:"
+msgstr ""
+
+#: ../editor.php:116 ../editor.php:117
+msgid "track"
+msgstr ""
+
+#: ../editor.php:130
+msgid "Crop"
+msgstr ""
+
+#: ../editor.php:131
+msgid "Resize"
+msgstr ""
+
+#: ../editor.php:132
+msgid "Rotate"
+msgstr ""
+
+#: ../editor.php:133
+msgid "Measure"
+msgstr ""
+
+#: ../editor.php:134
+msgid "Marker"
+msgstr ""
+
+#: ../editor.php:135
+msgid "Save"
+msgstr ""
+
+#: ../editor.php:138
+msgid "Image Editor"
+msgstr ""
+
+#: ../editorframe.php:33
+msgid "File saved."
+msgstr ""
+
+#: ../editorframe.php:35
+msgid "File was not saved"
+msgstr ""
+
+#: ../editorframe.php:49
+msgid "GIF format is not supported, image editing not supported."
+msgstr ""
+
+#: ../editorframe.php:57
+msgid "No Image Available"
+msgstr ""
+
+#: ../configure/index.php:55
+msgid "configuration"
+msgstr ""
+
+#: ../configure/index.php:58 ../configure/index.php:165
+#: ../configure/index.php:289
+msgid "go to:"
+msgstr ""
+
+#: ../configure/index.php:58 ../configure/index.php:289
+msgid "optional settings"
+msgstr ""
+
+#: ../configure/index.php:58 ../configure/index.php:165
+#: ../configure/index.php:289
+msgid "about"
+msgstr ""
+
+#: ../configure/index.php:62
+msgid "Settings"
+msgstr ""
+
+#: ../configure/index.php:64
+msgid "Paths"
+msgstr ""
+
+#: ../configure/index.php:66
+msgid "Base image directory:"
+msgstr ""
+
+#: ../configure/index.php:67
+msgid "Base image URL:"
+msgstr ""
+
+#: ../configure/index.php:72
+msgid "Base image directory"
+msgstr ""
+
+#: ../configure/index.php:74
+msgid "The base image directory must be world writable i.e.: chmod 777"
+msgstr ""
+
+#: ../configure/index.php:76
+msgid "Base image URL"
+msgstr ""
+
+#: ../configure/index.php:78
+msgid ""
+"The URL to the base image directory, the web browser needs to be able to see "
+"it."
+msgstr ""
+
+#: ../configure/index.php:81
+msgid ""
+"Note that the directory can be protected via .htaccess on apache or "
+"directory permissions on IIS, check your web server documentation for "
+"further information on directory protection. If this directory has to be "
+"publicly accessible, remove scripting capabilities for this directory (i.e. "
+"disable PHP, Perl, CGI). We only want to store images in this directory and "
+"its subdirectories."
+msgstr ""
+
+#: ../configure/index.php:84
+msgid ""
+"On apache you can create the following .htaccess file in your base image "
+"directory:"
+msgstr ""
+
+#: ../configure/index.php:100
+msgid "Image Manipulation Library"
+msgstr ""
+
+#: ../configure/index.php:102
+msgid "GD:"
+msgstr ""
+
+#: ../configure/index.php:103
+msgid "ImageMagick:"
+msgstr ""
+
+#: ../configure/index.php:104
+msgid "NetPBM:"
+msgstr ""
+
+#: ../configure/index.php:105
+msgid "Library path (IM or NetPBM):"
+msgstr ""
+
+#: ../configure/index.php:110
+msgid "GD"
+msgstr ""
+
+#: ../configure/index.php:112
+msgid "If GD is checked on initial configuration, you have GD installed"
+msgstr ""
+
+#: ../configure/index.php:114
+msgid "ImageMagick and NetPBM"
+msgstr ""
+
+#: ../configure/index.php:116
+msgid ""
+"If you want to use Imagemagick or NetPBM, PHP needs to be able to execute "
+"commands on the command line. That is, if PHP is in safe mode, then it may "
+"not be possible to use Imagemagic or NetPBM."
+msgstr ""
+
+#: ../configure/index.php:118
+msgid "Library path"
+msgstr ""
+
+#: ../configure/index.php:120
+msgid ""
+"If you have selected ImageMagick or NetPBM, you need to specify where the "
+"binary for the selected library are."
+msgstr ""
+
+#: ../configure/index.php:130
+msgid "Security"
+msgstr ""
+
+#: ../configure/index.php:132
+msgid "PHP is running in Safe Mode:"
+msgstr ""
+
+#: ../configure/index.php:134 ../configure/index.php:137
+msgid "Can create new directory:"
+msgstr ""
+
+#: ../configure/index.php:134
+msgid ""
+"Use the <a href='profile.php?page=role-manager/role-manager.php'>Role "
+"Manager</a> to manage the <b>Make Directory</b> role"
+msgstr ""
+
+#: ../configure/index.php:135 ../configure/index.php:138
+msgid "Can upload images:"
+msgstr ""
+
+#: ../configure/index.php:135
+msgid ""
+"Use the <a href='profile.php?page=role-manager/role-manager.php'>Role "
+"Manager</a> to manage the <b>Upload Files</b> role"
+msgstr ""
+
+#: ../configure/index.php:144
+msgid "<b>Safe Mode"
+msgstr ""
+
+#: ../configure/index.php:146
+msgid ""
+"If safe mode is check on initial configuration, your server is running in "
+"safe mode. More info on safe mode <a href='http://www.php.net/features.safe-"
+"mode' target='_blank'>here</a>"
+msgstr ""
+
+#: ../configure/index.php:147
+msgid ""
+"If running in safe mode, ImageManager can not: use ImageMagick or NetPBM and "
+"it can not create directories."
+msgstr ""
+
+#: ../configure/index.php:149
+msgid "Can create new directory"
+msgstr ""
+
+#: ../configure/index.php:151
+msgid "Allow the user to create and delete sub directories"
+msgstr ""
+
+#: ../configure/index.php:153
+msgid "Can upload images"
+msgstr ""
+
+#: ../configure/index.php:155
+msgid ""
+"Allow the user to upload images. Note: To be able to upload images, the "
+"image folder must be world writable."
+msgstr ""
+
+#: ../configure/index.php:165 ../configure/index.php:289
+msgid "settings"
+msgstr ""
+
+#: ../configure/index.php:165
+msgid "top"
+msgstr ""
+
+#: ../configure/index.php:170
+msgid "Optional settings"
+msgstr ""
+
+#: ../configure/index.php:173
+msgid "Thumbnails"
+msgstr ""
+
+#: ../configure/index.php:175
+msgid "Default thumbnail:"
+msgstr ""
+
+#: ../configure/index.php:176
+msgid "Thumbnail width:"
+msgstr ""
+
+#: ../configure/index.php:177
+msgid "Thumbnail height:"
+msgstr ""
+
+#: ../configure/index.php:178
+msgid "Thumbnail prefix:"
+msgstr ""
+
+#: ../configure/index.php:179
+msgid "Thumbnail directory:"
+msgstr ""
+
+#: ../configure/index.php:184
+msgid "<b>Default thumbnail"
+msgstr ""
+
+#: ../configure/index.php:186
+msgid ""
+"The default thumbnail if the thumbnails can not be created, either due to "
+"error or bad image file."
+msgstr ""
+
+#: ../configure/index.php:188
+msgid "Thumbnail prefix"
+msgstr ""
+
+#: ../configure/index.php:190
+msgid ""
+"The prefix for thumbnail files, something like .thumb will do. The "
+"thumbnails files will be named as 'prefix_imagefile.ext', that is, prefix + "
+"orginal filename."
+msgstr ""
+
+#: ../configure/index.php:192
+msgid "Thumbnail directory"
+msgstr ""
+
+#: ../configure/index.php:194
+msgid ""
+"Thumbnail can also be stored in a directory, this directory will be created "
+"by PHP. If PHP is in safe mode, this parameter is ignored, you can not "
+"create directories."
+msgstr ""
+
+#: ../configure/index.php:195
+msgid ""
+"If you do not want to store thumbnails in a directory, set this to false or "
+"leave the field empty."
+msgstr ""
+
+#: ../configure/index.php:206
+msgid "Misc. optional settings"
+msgstr ""
+
+#: ../configure/index.php:208
+msgid "Remove WordPress Upload Files:"
+msgstr ""
+
+#: ../configure/index.php:209
+msgid "Validate images:"
+msgstr ""
+
+#: ../configure/index.php:210
+msgid "tmp prefix:"
+msgstr ""
+
+#: ../configure/index.php:215
+msgid "<b>Remove WordPress Upload Files"
+msgstr ""
+
+#: ../configure/index.php:217
+msgid "Turn off Wordpress's native image / file uploader."
+msgstr ""
+
+#: ../configure/index.php:219
+msgid "Validate images"
+msgstr ""
+
+#: ../configure/index.php:221
+msgid ""
+"If checked, uploaded files will be validated based on the function "
+"getImageSize, if we can get the image dimensions then we asume this is a a "
+"valid image. Otherwise the file will be rejected."
+msgstr ""
+
+#: ../configure/index.php:222
+msgid "If not checked, all uploaded files will be processed."
+msgstr ""
+
+#: ../configure/index.php:223
+msgid "NOTE: If uploading is not allowed, this parameter is ignored."
+msgstr ""
+
+#: ../configure/index.php:225
+msgid "tmp prefix"
+msgstr ""
+
+#: ../configure/index.php:227
+msgid "Image Editor temporary filename prefix."
+msgstr ""
+
+#: ../configure/index.php:242
+msgid "About"
+msgstr ""
+
+#: ../configure/index.php:246
+msgid ""
+"for WordPress 2.0. The ImageManager provides an interface for  browsing and "
+"uploading image files on/to your server. The Editor allows for some basic "
+"image manipulations such as, cropping, rotation, flip, and scaling."
+msgstr ""
+
+#: ../configure/index.php:249
+msgid "The plugin adds the"
+msgstr ""
+
+#: ../configure/index.php:249
+msgid ""
+"button to the TinyMCE editor, or the <input type='button' "
+"value='ImageManager' class='ed_button' /> quicktag if you have disabled "
+"wysiwyg. To use ImageManager, click the button / quicktag :-)"
+msgstr ""
+
+#: ../configure/index.php:252
+msgid ""
+"Prior to using the ImageManager, you have to configure it by going through "
+"the <a href='#settings'>settings</a> on this page."
+msgstr ""
+
+#: ../configure/index.php:255
+msgid ""
+"ImageManger supports the <a href='http://redalt.com/wiki/Role+Manager'>Role "
+"Manager</a> plugin. It adds the new capabilities, 'Make Directory' and "
+"'Upload Files'. If you use Role Manager, you will need to"
+msgstr ""
+
+#: ../configure/index.php:255
+msgid "assign"
+msgstr ""
+
+#: ../configure/index.php:255
+msgid "these capabilities to the various roles."
+msgstr ""
+
+#: ../configure/index.php:261
+msgid "Credits"
+msgstr ""
+
+#: ../configure/index.php:263 ../configure/index.php:264
+#: ../configure/index.php:265
+msgid "by"
+msgstr ""
+
+#: ../configure/index.php:266
+msgid "The icon"
+msgstr ""
+
+#: ../configure/index.php:266
+msgid "were provided by"
+msgstr ""
+
+#: ../configure/index.php:266
+msgid "under a Creative Commons Attribution 2.5 license"
+msgstr ""
+
+#: ../images.php:58 ../images.php:79
+msgid "Trash"
+msgstr ""
+
+#: ../images.php:58
+msgid "Edit"
+msgstr ""
+
+#: ../images.php:96
+msgid "No Images Found"
+msgstr ""
+
+#: ../images.php:110
+msgid "Invalid base directory:"
+msgstr ""
+
+#: ../images.php:121
+msgid "Image List"
+msgstr ""
+
+#: ../manager.php:20 ../manager.php:39
+msgid "Insert Image"
+msgstr ""
+
+#: ../manager.php:42
+msgid "Image Manager"
+msgstr ""
+
+#: ../manager.php:44
+msgid "Directory"
+msgstr ""
+
+#: ../manager.php:51
+msgid "Directory Up"
+msgstr ""
+
+#: ../manager.php:53 ../newfolder.php:8 ../newfolder.php:65
+msgid "New Folder"
+msgstr ""
+
+#: ../manager.php:56
+msgid "Image Selection"
+msgstr ""
+
+#: ../manager.php:62
+msgid "Image File"
+msgstr ""
+
+#: ../manager.php:65
+msgid "Width"
+msgstr ""
+
+#: ../manager.php:69
+msgid "V Space"
+msgstr ""
+
+#: ../manager.php:73
+msgid "Alt / Title"
+msgstr ""
+
+#: ../manager.php:75
+msgid "Height"
+msgstr ""
+
+#: ../manager.php:77
+msgid "H Space"
+msgstr ""
+
+#: ../manager.php:81
+msgid "Style"
+msgstr ""
+
+#: ../manager.php:91
+msgid "Class"
+msgstr ""
+
+#: ../manager.php:94
+msgid "Align"
+msgstr ""
+
+#: ../manager.php:96
+msgid "Positioning of this image"
+msgstr ""
+
+#: ../manager.php:97
+msgid "Not Set"
+msgstr ""
+
+#: ../manager.php:98
+msgid "Left"
+msgstr ""
+
+#: ../manager.php:99
+msgid "Right"
+msgstr ""
+
+#: ../manager.php:100
+msgid "Texttop"
+msgstr ""
+
+#: ../manager.php:101
+msgid "Absmiddle"
+msgstr ""
+
+#: ../manager.php:102
+msgid "Baseline"
+msgstr ""
+
+#: ../manager.php:103
+msgid "Absbottom"
+msgstr ""
+
+#: ../manager.php:104
+msgid "Bottom"
+msgstr ""
+
+#: ../manager.php:105
+msgid "Middle"
+msgstr ""
+
+#: ../manager.php:106
+msgid "Top"
+msgstr ""
+
+#: ../manager.php:109
+msgid "Border"
+msgstr ""
+
+#: ../manager.php:124 ../manager.php:129
+msgid "Upload"
+msgstr ""
+
+#: ../manager.php:138
+msgid "Insert as:"
+msgstr ""
+
+#: ../manager.php:140
+msgid "Image"
+msgstr ""
+
+#: ../manager.php:141
+msgid "Thumbnail with PopUp"
+msgstr ""
+
+#: ../manager.php:142
+msgid "Thumbnail with link to the image"
+msgstr ""
+
+#: ../manager.php:143
+msgid "Thumbnail"
+msgstr ""
+
+#: ../manager.php:144
+msgid "Link to the image"
+msgstr ""
+
+#: ../manager.php:152
+msgid "Refresh"
+msgstr ""
+
+#: ../newfolder.php:68
+msgid "Folder Name:"
+msgstr ""
+
+#: ../assets/editorframe_js.php:67
+msgid "Please enter a filename to save."
+msgstr ""
+
+#: ../assets/images_js.php:14 ../assets/images_js.php:36
+msgid "Loading"
+msgstr ""
+
+#: ../assets/images_js.php:85
+msgid "Delete file?"
+msgstr ""
+
+#: ../assets/images_js.php:95
+msgid ""
+"Please delete all files/folders inside the folder you wish to delete first."
+msgstr ""
+
+#: ../assets/images_js.php:99
+msgid "Delete folder?"
+msgstr ""
+
+#: ../assets/manager_js.php:206
+msgid "Uploading"
+msgstr ""
+
+#: ../assets/manager_js.php:230
+msgid "Invalid folder name, please choose another folder name."
+msgstr ""

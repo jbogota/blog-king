@@ -1,0 +1,17 @@
+Install
+------------------
+- upload the king-events folder into your plugins folder
+- make sure you have the king framework (king-includes) in you plugins folder. king events uses some of the framework functions nad mybe more in the future
+- activate the plugin
+- go into the options and set global link-insertion options
+- definitly set the html template and it´s dateformat
+- copy the css styles in your templates stylesheet
+- copy the icons into your template images folder
+
+
+
+------------------
+CSS Styles
+
+if you want to format the external links with icons in front or show only icons (google/yahoo calendar ..)
+Put the relating style snippets in your templates/styles.css and the icons in your images folder.
