@@ -1,3 +1,17 @@
+#labels Featured
+== King Widgets ==
+
+Those plugins only work with the widgets Plugin released by automattic or my jQueryfied version all of those can be found here in the repo:
+http://blog-king.googlecode.com/svn/trunk/blog-king/wp-content/plugins/king-widgets/
+
 [http://www.blog.mediaprojekte.de/cms-systeme/wordpress-plugins/king-widget-framework/ http://www.blog.mediaprojekte.de/wp-content/wp-filez/king_framework_wappen.jpg]
 
 [http://www.blog.mediaprojekte.de/cms-systeme/wordpress/wordpress-widget-king-categories/ http://www.blog.mediaprojekte.de/wp-content/wp-filez/king_categories_wappen.jpg]
+
+
+[http://www.blog.mediaprojekte.de/cms-systeme/wordpress-plugins/wordpress-widget-king-pages/ http://www.blog.mediaprojekte.de/wp-content/wp-filez/king_pages_wappen.jpg]
+
+[http://www.blog.mediaprojekte.de/cms-systeme/wordpress-plugins/wordpress-widget-king-links/ http://www.blog.mediaprojekte.de/wp-content/wp-filez/king_links_wappen.jpg]
+
+[http://www.blog.mediaprojekte.de/cms-systeme/wordpress-plugins/wordpress-widget-king-rss/ http://www.blog.mediaprojekte.de/wp-content/wp-filez/king_rss_wappen.jpg]
+
