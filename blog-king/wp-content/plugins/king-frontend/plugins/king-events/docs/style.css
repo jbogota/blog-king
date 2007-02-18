@@ -1,0 +1,68 @@
+
+ /* cal icons without text... */
+
+  #boxes_cal { background: url(images/30boxes.png) no-repeat 0 50%; height: 16px; text-indent: -999em; width: 16px; }
+  #eventful { background: url(images/eventful.png) no-repeat; height: 16px; text-indent: -999em; width: 16px; }
+  #google_cal { background: url(images/google_cal.gif) no-repeat 0 50%; height: 16px; text-indent: -999em; width: 16px; }
+  #google_map { background: url(images/google_map.png) no-repeat 0 50%; height: 16px; text-indent: -999em; width: 16px; }
+  #goyellow { background: url(images/goyellow.png) no-repeat 0 50%; height: 16px; text-indent: -999em; width: 16px; }
+  #ical { background: url(images/ical_subscribe.gif) no-repeat 0 50%; height: 16px; text-indent: -999em; width: 16px; }
+  #ics { background: url(images/ics_link.gif) no-repeat 0 50%; height: 16px; text-indent: -999em; width: 16px; }
+  #upcoming { background: url(images/upcoming.png) no-repeat 0 50%; height: 16px; text-indent: -999em; width: 16px; }
+  #yahoo_map { background: url(images/yahoo_map.png) no-repeat 0 50%; height: 16px; text-indent: -999em; width: 16px; }
+  #yahoo_cal { background: url(images/yahoo_cal.png) no-repeat 0 50%; height: 16px; text-indent: -999em; width: 16px; }
+  #zvents { background: url(images/zvents.png) no-repeat 0 50%; height: 16px; text-indent: -999em; width: 16px; }
+  #qype { background: url(images/qype.gif) no-repeat 0 50%; height: 16px; text-indent: -999em; width: 16px; }
+  #plazes { background: url(images/plazes.gif) no-repeat 0 50%; height: 16px; text-indent: -999em; width: 16px; }
+  #plazes_pe { background: url(images/plazes_pe.gif) no-repeat 0 50%; height: 16px; text-indent: -999em; width: 16px; }
+  #sl { background: url(images/sl.gif) no-repeat 0 50%; height: 16px; text-indent: -999em; width: 16px; }
+  #blogscout { background: url(images/blogscout.png) no-repeat 0 50%; height: 16px; text-indent: -999em; width: 16px; }
+  
+
+ /* ...icons without text */
+
+
+
+ /* cal icons with text... */
+
+  #boxes_cal { background: url(images/30boxes.png) no-repeat 0 50%; padding: 0 0 0 20px; }
+  #eventful { background: url(images/eventful.png) no-repeat; padding: 0 0 0 20px; }
+  #google_cal { background: url(images/google_cal.gif) no-repeat 0 50%; padding: 0 0 0 20px; }
+  #google_map { background: url(images/google_map.png) no-repeat 0 50%; padding: 0 0 0 20px; }
+  #goyellow { background: url(images/goyellow.png) no-repeat 0 50%; padding: 0 0 0 20px; }
+  #ical { background: url(images/ical_subscribe.gif) no-repeat 0 50%; padding: 0 0 0 20px; }
+  #ics { background: url(images/ics_link.gif) no-repeat 0 50%; padding: 0 0 0 20px; }
+  #upcoming { background: url(images/upcoming.png) no-repeat 0 50%; padding: 0 0 0 20px; }
+  #yahoo_map { background: url(images/yahoo_map.png) no-repeat 0 50%; padding: 0 0 0 20px; }
+  #yahoo_cal { background: url(images/yahoo_cal.png) no-repeat 0 50%; padding: 0 0 0 20px; }
+  #zvents { background: url(images/zvents.png) no-repeat 0 50%; padding: 0 0 0 20px; }
+  #qype { background: url(images/qype.gif) no-repeat 0 50%; padding: 0 0 0 20px; }
+  #plazes { background: url(images/plazes.gif) no-repeat 0 50%; padding: 0 0 0 20px; }
+  #plazes_pe { background: url(images/plazes_pe.gif) no-repeat 0 50%; padding: 0 0 0 20px; }
+  #sl { background: url(images/sl.gif) no-repeat 0 50%; padding: 0 0 0 20px; }
+  #blogscout { background: url(images/blogscout.png) no-repeat 0 50%; padding: 0 0 0 20px; }
+
+ /* ...icons with text */
+
+
+ /* cal text only ... */
+
+  #boxes_cal { }
+  #eventful { }
+  #google_cal { }
+  #google_map { }
+  #goyellow { }
+  #ical { }
+  #ics { }
+  #upcoming { }
+  #yahoo_map { }
+  #yahoo_cal { }
+  #zvents { }
+  #qype { }
+  #plazes { }
+  #plazes_pe { }
+  #sl { }
+  #blogscout { }
+ /* ...only text */
+
+
