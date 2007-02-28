@@ -48,90 +48,85 @@ class TimeZone
 {
     function TimeZone()
     {
-	if (!ini_get('safe_mode')) {
-	    $tz = get_option('timezone_tz');
-	    if (!empty($tz)) putenv("TZ=$tz");
-	}
-	add_action('admin_menu', array(&$this, 'admin_menu'));
-	// Broken in WordPress 1.5
-	//add_action('options_page_timezone', array(&$this, 'options_page'));
-	add_action('option_gmt_offset', array(&$this, 'option_gmt_offset'));
+		if (!ini_get('safe_mode')) {
+		    $tz = get_option('timezone_tz');
+		    if (!empty($tz)) putenv("TZ=$tz");
+		}
+		add_action('admin_menu', array(&$this, 'admin_menu'));
     }
 
     function admin_menu()
     {
-	add_options_page(
-	    __('Time Zone Options'),
-	    __('Time Zone'), 5, basename(__FILE__));
+		add_options_page( __('Time Zone Options'),__('Time Zone'), 5, basename(__FILE__), array(&$this,'options_page'));
     }
 
     function options_page()
     {
-	if (isset($_POST['Submit'])):
-	    update_option('timezone_tz', $_POST['timezone_tz']);
-	    // There is no function to remove TZ from environment
-	    // so we only output the save success notification.
-?>
-<div class="updated">
-<p><strong><?php _e('Einstellungen gespeichert.') ?></strong></p>
-</div>
-<?php
-	else:
-	    $t = time();
-?>
-<div class="wrap">
-<h2><?php echo __('Zeitzonen Einstellung'); ?></h2>
-<form name="timezone" method="post" action="">
-    <input type="hidden" name="action" value="update" />
-    <input type="hidden" name="page_options" value="'timezone_tz'" />
-    <fieldset class="options">
-	<legend><?php echo _e('Bisheriger Wert'); ?></legend>
-	<table cellspacing="2" cellpadding="5" class="editform">
-	    <tr valign="baseline">
-		<th scope="row"><?php _e('Name der Zeitzone:') ?></th>
-		<td><?php echo strftime('%Z', $t); ?></td>
-	    </tr>
-	    <tr valign="baseline">
-		<th scope="row"><?php _e('Verschiebung der Zeitzone:') ?></th>
-		<td><?php echo strftime('%z', $t); ?></td>
-	    </tr>
-	    <tr valign="baseline">
-		<th scope="row"><?php _e('Datum und Zeit:') ?></th>
-		<td><?php echo date('r (T)'); ?></td>
-	    </tr>
-	</table>
-    </fieldset>
-    <fieldset class="options">
-	<legend><?php _e('Automatische Wordpress Einstellung') ?></legend>
-	<table cellspacing="2" cellpadding="5" class="editform">
-	    <tr valign="baseline">
-		<th scope="row"><?php
-		    _e('Differenz:') ?></th>
-		<td><?php echo $this->option_gmt_offset(); ?> Stunden</td>
-	    </tr>
-	</table>
-    </fieldset>
-<?php if (!ini_get('safe_mode')): ?>
-    <fieldset class="options">
-	<legend><?php _e('Von Ihnen gew&#228;hlte Zeitzone') ?></legend>
-	<table cellspacing="2" cellpadding="5" class="editform">
-	    <tr valign="baseline">
-		<th scope="row"><?php _e('Zeitzone (TZ)') ?>:</th>
-		<td><input name="timezone_tz" type="text" id="timezone_tz"
-		    value="<?php form_option('timezone_tz'); ?>" size="40" />
-		</td>
-	    </tr>
-	</table>
-    </fieldset>
-<?php endif; ?>
-    <p class="submit">
-	<input type="submit" name="Submit"
-	    value="<?php _e('Aktualisieren') ?> &raquo;" />
-    </p>
-</form>
-</div>
-<?php
-	endif;
+		if (isset($_POST['Submit'])):
+		    update_option('timezone_tz', $_POST['timezone_tz']);
+		    // There is no function to remove TZ from environment
+		    // so we only output the save success notification.
+			?>
+			<div class="updated">
+			<p><strong><?php _e('Einstellungen gespeichert.') ?></strong></p>
+			</div>
+			<?php
+				else:
+				    $t = time();
+			?>
+			<div class="wrap">
+			<h2><?php echo __('Zeitzonen Einstellung'); ?></h2>
+			<form name="timezone" method="post" action="">
+			    <input type="hidden" name="action" value="update" />
+			    <input type="hidden" name="page_options" value="'timezone_tz'" />
+			    <fieldset class="options">
+				<legend><?php echo _e('Bisheriger Wert'); ?></legend>
+				<table cellspacing="2" cellpadding="5" class="editform">
+				    <tr valign="baseline">
+					<th scope="row"><?php _e('Name der Zeitzone:') ?></th>
+					<td><?php echo strftime('%Z', $t); ?></td>
+				    </tr>
+				    <tr valign="baseline">
+					<th scope="row"><?php _e('Verschiebung der Zeitzone:') ?></th>
+					<td><?php echo strftime('%z', $t); ?></td>
+				    </tr>
+				    <tr valign="baseline">
+					<th scope="row"><?php _e('Datum und Zeit:') ?></th>
+					<td><?php echo date('r (T)'); ?></td>
+				    </tr>
+				</table>
+			    </fieldset>
+			    <fieldset class="options">
+				<legend><?php _e('Automatische Wordpress Einstellung') ?></legend>
+				<table cellspacing="2" cellpadding="5" class="editform">
+				    <tr valign="baseline">
+					<th scope="row"><?php
+					    _e('Differenz:') ?></th>
+					<td><?php echo $this->option_gmt_offset(); ?> Stunden</td>
+				    </tr>
+				</table>
+			    </fieldset>
+			<?php if (!ini_get('safe_mode')): ?>
+			    <fieldset class="options">
+				<legend><?php _e('Von Ihnen gew&#228;hlte Zeitzone') ?></legend>
+				<table cellspacing="2" cellpadding="5" class="editform">
+				    <tr valign="baseline">
+					<th scope="row"><?php _e('Zeitzone (TZ)') ?>:</th>
+					<td><input name="timezone_tz" type="text" id="timezone_tz"
+					    value="<?php form_option('timezone_tz'); ?>" size="40" />
+					</td>
+				    </tr>
+				</table>
+			    </fieldset>
+			<?php endif; ?>
+			    <p class="submit">
+				<input type="submit" name="Submit"
+				    value="<?php _e('Aktualisieren') ?> &raquo;" />
+			    </p>
+			</form>
+			</div>
+			<?php
+		endif;
     }
 
     // Get the GMT offset from TZ
