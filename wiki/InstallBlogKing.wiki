@@ -1,4 +1,5 @@
-#install the blog king package
+#labels install
+Installation of the Blog King plugin package
 
 = New Install =
 
@@ -22,4 +23,3 @@ Then you can compare your addons and manually delete your old doubles.
 If you have a plugins which are not in the King Package you can safely keep / isntall them. 
 The only difference in the Blog King plugins directory is the further division into subfolders, to keep the pluginarea/folder clean. For this reason some integrated plugins had to be adapted because they are using absolute paths to refer to some of their files.
  
-
