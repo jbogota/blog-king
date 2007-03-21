@@ -42,11 +42,12 @@ function widget_king_admin_head()
 		load_plugin_textdomain('widgetKing','/wp-content/plugins/king-includes/lang');
 	}
 	elseif( strpos($_SERVER['REQUEST_URI'], 'post.php')  !== false )
-	{ # only include in post article
-		echo '<link rel="stylesheet" href="'. $css_dir.'king_admin.css" type="text/css" media="screen" />'."\n";
-		echo '<script type="text/javascript" src="'.$js_dir.'jquery.js"></script>'."\n";
-		echo '<script type="text/javascript" src="'.$js_dir.'jquery_plugins.js"></script>'."\n";
-		echo '<script type="text/javascript" src="'.$js_dir.'king_admin.js"></script>'."\n";
+	{ # only include in post article temp. disabled since incompatibilities
+		# and new methods to add js to head in wp2.1
+//		echo '<link rel="stylesheet" href="'. $css_dir.'king_admin.css" type="text/css" media="screen" />'."\n";
+//		echo '<script type="text/javascript" src="'.$js_dir.'jquery.js"></script>'."\n";
+//		echo '<script type="text/javascript" src="'.$js_dir.'jquery_plugins.js"></script>'."\n";
+//		echo '<script type="text/javascript" src="'.$js_dir.'king_admin.js"></script>'."\n";
 	}
 	if (strpos($_SERVER['REQUEST_URI'], 'plugins.php') !== false) {
 		echo '<script type="text/javascript" src="' . $js_dir . 'prototype-1.4.0.js"></script>'."\n";
