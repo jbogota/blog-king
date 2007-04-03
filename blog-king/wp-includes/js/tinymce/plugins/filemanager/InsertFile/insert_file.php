@@ -10,7 +10,15 @@
 
 require("config.inc.php");
 //include ("langs/de.php");
-include ('../langs/'.$MY_LANG.'.php');
+if(file_exists('../langs/'.$MY_LANG.'.php'))
+{
+	include ('../langs/'.$MY_LANG.'.php');
+}
+else
+{
+	include ('../langs/en.php');
+}
+
 
 ?>
 
