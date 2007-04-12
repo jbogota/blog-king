@@ -12,7 +12,7 @@ class sk2_plugin
 	var $settings_format;
 	var $filter = false;
 	var $treatment = false;
-	var $version = 1;
+	var $plugin_version = 1;
 	var $release_string = "";
 	var $skip_under = -15;
 	var $skip_above = 10;

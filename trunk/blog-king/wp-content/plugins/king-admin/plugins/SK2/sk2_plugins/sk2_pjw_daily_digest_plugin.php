@@ -2,7 +2,7 @@
 /*	
 	Simple Digest Plugin
 	For Spam Karma 2
-	Version 1.02 // minor revs. by dr Dave
+	Version 1.20 
 	Copyright 2005 Peter Westood 
 
 	This program is free software; you can redistribute it and/or
@@ -23,7 +23,7 @@
 class sk2_pjw_simpledigest extends sk2_plugin
 {
 	var $name = "Simple Digest";
-	var $plugin_version = 1.0;
+	var $plugin_version = 1.20;
 	var $release_string ="";
 	var $show_version =true;
 	var $author = "Peter Westwood";
@@ -47,22 +47,28 @@ class sk2_pjw_simpledigest extends sk2_plugin
 													),
 													
 								"digest_threshold" => array("type" => "text", 
-				   								"value"=> -20, 
-				   								"caption" => "Skip spam with karma under ",
-													"size" => 3
-													),
+				   											"value"=> -20, 
+				   											"caption" => "Skip spam with karma under ",
+															"size" => 3
+															),
+								"digest_order" => array("type" => "checkbox",
+														"value" => false,
+														"caption" => "Order comments by karma rather than date.")
 								);
 
 	function treat_this(&$cmt_object)
 	{
-		global $wpdb;
+		global $wpdb,$wp_version,$wp_db_version;
 
 		$interval = $this->get_option_value('interval');
 		$last_run = $this->get_option_value('last_run');
 		$threshold = $this->get_option_value('digest_threshold');
+		$order_by_karma = $this->get_option_value('digest_order');
 		
 		if ($last_run + ($interval * 3600) < time())
 		{
+			//Record a new last run time now to stop multiple concurrent spam digests maybe?
+			$this->set_option_value('last_run', time());
 			$this->log_msg(sprintf(__("Generating mail digest (Last digest was %s).", 'sk2'), sk2_time_since($last_run)));
 			$new_spams = $wpdb->get_var(
 							"SELECT COUNT(*) FROM `$wpdb->comments` WHERE "
@@ -79,7 +85,14 @@ class sk2_pjw_simpledigest extends sk2_plugin
 			//### l10n Add
 			$mail_content .= sprintf(__ngettext("There has been one comment spam caught since the last digest report %s ago.", "There have been %s comment spams caught since the last digest report %s ago.", $new_spams, 'sk2'), $new_spams, sk2_time_since($last_run)) ."\r\n";
 			$mail_content .= "\r\n";
-			$mail_content .= sprintf(__("Spam summary report (skipping karma under %d): ", 'sk2'), $threshold) . "\r\n\r\n";
+			$mail_content .= sprintf(__("Spam summary report (skipping karma under %d): ", 'sk2'), $threshold) . "\r\n";
+			if (true == $order_by_karma)
+			{
+				$mail_content .= __("Summary is ordered by karma.", 'sk2');
+			} else {
+				$mail_content .= __("Summary is ordered by date.", 'sk2');
+			}		
+			$mail_content .= "\r\n\r\n";
 
 			/* Only do the query if there are new spams
 			  Props to MCIncubus.
@@ -87,19 +100,25 @@ class sk2_pjw_simpledigest extends sk2_plugin
 			if ((int) $new_spams > 0 )
 			{
 				//Query stolen from SK2 core.
-				$spam_rows = $wpdb->get_results(
-							"SELECT `posts_table`.`post_title`, `spam_table`.`karma`, "
-							."`spam_table`.`id` as `spam_id`,`spam_table`.`karma_cmts`, "
-							."`comments_table`.* FROM `"
-							.$wpdb->comments ."` AS `comments_table` LEFT JOIN `" 
-							.$wpdb->posts ."` AS `posts_table` ON "
-							."`posts_table`.`ID` = `comments_table`.`comment_post_ID` LEFT JOIN `"
-							. sk2_kSpamTable . "` AS `spam_table` ON "
-							."`spam_table`.`comment_ID` = `comments_table`.`comment_ID` WHERE "
-							."(`comment_approved`= '0' OR (`comment_approved` = 'spam' AND `spam_table`.`karma` >= $threshold)) AND "
-							."`comment_date_gmt` > " 
-							.gmstrftime("'%Y-%m-%d %H:%M:%S'", (int) $last_run)
-							." ORDER BY `comment_date_gmt`");
+				$digest_query =	"SELECT `posts_table`.`post_title`, `spam_table`.`karma`, "
+								."`spam_table`.`id` as `spam_id`,`spam_table`.`karma_cmts`, "
+								."`comments_table`.* FROM `"
+								.$wpdb->comments ."` AS `comments_table` LEFT JOIN `" 
+								.$wpdb->posts ."` AS `posts_table` ON "
+								."`posts_table`.`ID` = `comments_table`.`comment_post_ID` LEFT JOIN `"
+								. sk2_kSpamTable . "` AS `spam_table` ON "
+								."`spam_table`.`comment_ID` = `comments_table`.`comment_ID` WHERE "
+								."(`comment_approved`= '0' OR (`comment_approved` = 'spam' AND `spam_table`.`karma` >= $threshold)) AND "
+								."`comment_date_gmt` > " 
+								.gmstrftime("'%Y-%m-%d %H:%M:%S'", (int) $last_run);
+				if (true == $order_by_karma)
+				{
+					$digest_query .= " ORDER BY `spam_table`.`karma` DESC ";
+				} else {
+					$digest_query .= " ORDER BY `comment_date_gmt`";
+				}
+
+				$spam_rows = $wpdb->get_results($digest_query);
 
 				if (is_array($spam_rows))
 				{
@@ -113,19 +132,19 @@ class sk2_pjw_simpledigest extends sk2_plugin
 						{
 							$row->karma = "[?]";
 						}
-				
-						$mail_content .= "=======================================================\r\n";
-						$mail_content .= "Report on comment number " . $comment_count 
-										 ." (id=".$row->comment_ID.")" ."\r\n";
-						$mail_content .= __("Comment Author: ", 'sk2') . $row->comment_author ."\r\n";
-						$mail_content .= __("Comment Type: ", 'sk2');
-						if(empty($row->comment_type))
-							$mail_content .= __("Comment", 'sk2');
-						else 
-							$mail_content .= $row->comment_type;
+			
 						
-						$mail_content .= "\r\n";
-						$mail_content .= __("Comment Content: ", 'sk2') . "\r\n"
+			
+						if(empty($row->comment_type))
+							$type = __("Comment", 'sk2');
+						else 
+							$type = $row->comment_type;
+					
+						$mail_content .= "=======================================================\r\n";
+						$mail_content .= "Report on ".$type." number " . $comment_count 
+										 ." (id=".$row->comment_ID.")" ."\r\n";
+						$mail_content .= $type . __(" Author: ", 'sk2') . $row->comment_author ."\r\n";
+						$mail_content .= $type . __(" Content: ", 'sk2') . "\r\n"
 										 ."-----------------------------------------\r\n"
 										 .strip_tags($row->comment_content) ."\r\n";
 
@@ -157,17 +176,21 @@ class sk2_pjw_simpledigest extends sk2_plugin
 				}
 			
 				$headers = "From: " . get_settings('admin_email') . "\r\n"
-      			 ."Reply-To: " . get_settings('admin_email') . "\r\n"
-						 ."X-Mailer: PHP/" . phpversion() . "\r\n"
-						 ."Content-Type: text/plain; "
-					   ."charset=\"".get_settings('blog_charset')."\"\r\n";
+      			 			."Reply-To: " . get_settings('admin_email') . "\r\n"
+						 	."X-Mailer: PHP/" . phpversion() . "\r\n"
+							."X-WordPress-Version: WordPress/" . $wp_version . "/" .$wp_db_version ."\r\n"
+							."X-WordPress-Plugin: " . $this->name . "/" . $this->plugin_version . "/" .$this->release_string ."\r\n"
+						 	."Content-Type: text/plain; "
+					   		."charset=\"".get_settings('blog_charset')."\"\r\n";
 
 				wp_mail(get_settings("admin_email"), $mail_subj, $mail_content, $headers);
-				$this->set_option_value('last_run', time());
 			}
 			else
 			{
 				$this->log_msg(__("Comment would have caused digest but no new spam recieved since last digest."), 4);
+				// Reset the last run time so that the next comment will trigger a digest as we overwrote it at the first possible moment
+				// so as to ensure the least possiblity of multiple digest emails
+				$this->set_option_value('last_run', $last_run);
 			}
 		}
 		else

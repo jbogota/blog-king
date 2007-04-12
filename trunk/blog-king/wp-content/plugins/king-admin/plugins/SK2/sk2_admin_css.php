@@ -187,6 +187,19 @@ p.sk2_form
 	margin: 0px 0px 4px 0px;
 }
 
+
+#remove_checked 
+{
+color:#FF0000; 
+background-color:#000000;
+}
+
+#recover_checked 
+{
+color:#5E7CAE; 
+background-color:#AADDAA;
+}
+
 tr.moderated td, 
 tr.moderated th 
 {
@@ -298,7 +311,6 @@ border: 2px solid red;
 	indent:0;
 	margin:8px;
 }
-
 
 
 //-->
