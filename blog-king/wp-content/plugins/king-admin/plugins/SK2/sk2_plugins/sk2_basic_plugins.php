@@ -172,7 +172,7 @@ class sk2_old_post_plugin extends sk2_plugin
 					}
 					else
 					{
-						$hit = max (($still_active / $tot_cmts) * min((time() - $post_ts) / ($old_when * 86400), 10) * (0.25 / $cmt_object->karma), 5); // trying to stay within captcha threshold...
+						$hit = min (($still_active / $tot_cmts) * min((time() - $post_ts) / ($old_when * 86400), 10) * (0.25 / $cmt_object->karma), 5); // trying to stay within captcha threshold...
 					}
 					$this->hit_karma($cmt_object, $hit, $log);
 					$this->log_msg($log . " " . sprintf(__("Hitting for: %d karma points.", 'sk2'), round($hit, 2)), 2);

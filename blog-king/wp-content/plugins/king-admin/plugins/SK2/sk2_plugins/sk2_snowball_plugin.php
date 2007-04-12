@@ -30,10 +30,16 @@ class sk2_snowball_plugin extends sk2_plugin
 
 		if (! empty($cmt_object->author_url['domain']))
 		{
+			$my_url = $cmt_object->author_url['domain'];
+
+			global $sk2_blacklist;
+			if ($grey_rows = $sk2_blacklist->match_entries('domain_grey', $my_url, true, 80))
+				$my_url = $cmt_object->author_url['url'];
+
 			if (count($cmt_object->content_links))
-				$this->snowball_by($cmt_object, "URL", "AND `comments`.`comment_author_url` LIKE '%". sk2_escape_string($cmt_object->author_url['domain']) ."%'", 1, 0.02);
+				$this->snowball_by($cmt_object, "URL", "AND `comments`.`comment_author_url` LIKE '%". sk2_escape_string($my_url) ."%'", 1, 0.02);
 			else
-				$this->snowball_by($cmt_object, "URL", "AND `comments`.`comment_author_url` LIKE '%". sk2_escape_string($cmt_object->author_url['domain']) ."%'", 1.5, 1);			
+				$this->snowball_by($cmt_object, "URL", "AND `comments`.`comment_author_url` LIKE '%". sk2_escape_string($my_url) ."%'", 1.5, 1);			
 		}
 
 		if (! empty($cmt_object->author_email))
@@ -84,8 +90,8 @@ class sk2_snowball_plugin extends sk2_plugin
 							$this->log_msg_mysql(__("Retro-spanking sql query failed.", 'sk2'), 7, $this->ID);
 
 					}
-					else // decent average: small penalty
-						$karma_diff = - ($coef_hit * $recent->cmt_count + $threshold);
+					elseif ($recent->karma_avg < $recent->cmt_count) // decent average: small penalty
+						$karma_diff = - 0.5 * $coef_hit * ($recent->cmt_count - $recent->karma_avg + $threshold);
 					//DdV TODO: check if this is a flood and retro-moderate other comments
 				}
 				elseif($coef * $old->cmt_count < $recent->cmt_count) // much less old than new

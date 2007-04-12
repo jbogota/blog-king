@@ -7,7 +7,7 @@ class sk2_javascript_plugin extends sk2_plugin
 	var $name = "Javascript Payload";
 	var $author = "";
 	var $plugin_help_url = "http://wp-plugins.net/wiki/?title=SK2_Javascript_Plugin";
-	var $description = "Embed a few Javascript commands in comment form (most browsers withtout Javascript abilities are usually spambots). If the browser does not support Javascript, it only receives a small penalty.";
+	var $description = "Embed a few Javascript commands in comment form (most browsers without Javascript abilities are usually spambots). If the browser does not support Javascript, it only receives a small penalty.";
 	var $filter = true;
 	var $skip_under = -20;
 	var $skip_above = 10;
@@ -20,7 +20,7 @@ class sk2_javascript_plugin extends sk2_plugin
 		{
 			$seed = sk2_rand_str(10);
 			$this->set_option_value('secret_seed', $seed);
-			$this->log_msg(__("Resetting secret Javascript seed to: ", 'sk2') . $seed, 5);
+			$this->log_msg(__("Resetting secret seed to: ", 'sk2') . $seed, 5);
 		}
 		
 		$max = rand(5, 9);

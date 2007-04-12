@@ -13,7 +13,7 @@ class sk2_captcha_plugin extends sk2_plugin
 
 	var $weight_levels = array("0" => "Disabled", "0.5" => "Easy", "1.0" => "Enabled", "2.0" => "Difficult");
 
-	var $settings_format = array ("threshold" => array("advanced" => true, "type" => "text", "value"=> -5, "caption" => "Give the Captcha backup for karma over ", "size" => 3, "after" => " <i>(Note: this value will only be used if the karma doesn't allow the comment to be displayed directly to begin with. See below)</i>."), 
+	var $settings_format = array ("threshold" => array("advanced" => true, "type" => "text", "value"=> -10, "caption" => "Give the Captcha backup for karma over ", "size" => 3, "after" => " <i>(Note: this value will only be used if the karma doesn't allow the comment to be displayed directly to begin with. See below)</i>."), 
 												"expiration" => array("advanced" => true, "type" => "text", "value"=> 3, "caption" => "Expire after ", "size" => 3, "after" => " hours."));
 	
 	function treat_this(&$cmt_object)

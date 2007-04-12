@@ -16,9 +16,9 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 
 define ("sk2_kPluginFolder", dirname(__FILE__) . "/sk2_plugins/");
-define ("sk2_kCoreVersion", 4);
-define ("sk2_kVersion", 2); // => 2.2
-define ("sk2_kRelease", "final r3");
+define ("sk2_kCoreVersion", 5);
+define ("sk2_kVersion", 3); // => 2.3
+define ("sk2_kRelease", "rc1");
 if (isset($table_prefix))
 	define ("sk2_kSpamTable", $table_prefix . "sk2_spams");
 else
@@ -106,6 +106,7 @@ class sk2_core
 	
 	function filter_comment ($comment_ID = 0)
 	{
+		$start = time();
 		if ($comment_ID && ($comment_ID != @$this->cur_comment->ID))
 			$this->cur_comment = new sk2_comment($comment_ID, $this->post_proc); // ? does PHP garbage collect? sure hope so...
 
@@ -126,10 +127,15 @@ class sk2_core
 						&& ((int) $this->cur_comment->karma < $plugin[1]->skip_above))))
 					$plugin[1]->filter_this($this->cur_comment);
 		}
+		
+		$dur = time() - $start;
+		if ($dur > 1000)
+			$this->log_msg(sprintf(__("Filter processing on comment ID %d took %d ms.", 'sk2'), $this->cur_comment->ID, $dur), 3);
 	}
 	
 	function treat_comment ($comment_ID = 0)
 	{
+		$start = time();
 		if ($comment_ID && ($comment_ID != @$this->cur_comment->ID))
 			$this->cur_comment = new sk2_comment($comment_ID, $this->post_proc);
 
@@ -145,6 +151,11 @@ class sk2_core
 			if ($plugin[1]->is_treatment()
 				&& ($plugin[1]->is_enabled()))
 				$plugin[1]->treat_this($this->cur_comment);
+
+		$dur = time() - $start;
+		if ($dur > 1000)
+			$this->log_msg(sprintf(__("Treatment processing on comment ID %d took %d ms.", 'sk2'), $this->cur_comment->ID, $dur), 3);
+
 	}
 	
 	function form_insert ($post_ID = 0)
@@ -392,15 +403,15 @@ class sk2_core
 		foreach ($this->plugins as $plugin)
 		{
 			$class_name = $plugin[2];
-			if (@$mysql_updates[$class_name] < $plugin[1]->version)
+			if (@$mysql_updates[$class_name] < $plugin[1]->plugin_version)
 			{
 				if ($plugin[1]->update_SQL_schema (@$mysql_updates[$class_name]))
 				{
-					$this->log_msg(__("Updated SQL schema for plugin: ", 'sk2') . "<em>" . $plugin[1]->name . "</em> ". sprintf(__("(to version: %d).", 'sk2'), $plugin[1]->version), 5);
-					$mysql_updates[$class_name] = $plugin[1]->version;
+					$this->log_msg(__("Updated SQL schema for plugin: ", 'sk2') . "<em>" . $plugin[1]->name . "</em> ". sprintf(__("(to version: %d).", 'sk2'), $plugin[1]->plugin_version), 5);
+					$mysql_updates[$class_name] = $plugin[1]->plugin_version;
 				}
 				else
-					$this->log_msg(__("Failed to update SQL schema for plugin: ", 'sk2') . "<em>" . $plugin[1]->name . "</em> ". sprintf(__("(to version: %d).", 'sk2'), $plugin[1]->version), 8);
+					$this->log_msg(__("Failed to update SQL schema for plugin: ", 'sk2') . "<em>" . $plugin[1]->name . "</em> ". sprintf(__("(to version: %d).", 'sk2'), $plugin[1]->plugin_version), 8);
 			}
 		}
 		
@@ -426,15 +437,17 @@ class sk2_core
 
 		foreach ($this->plugins as $plugin)
 		{
-			if (@$version_updates[$plugin[2]] < $plugin[1]->version)
+			$class_name = $plugin[2];
+
+			if (@$version_updates[$class_name] < $plugin[1]->plugin_version)
 			{
-				if ($plugin[1]->version_update (@$version_updates[$plugin[2]]))
+				if ($plugin[1]->version_update (@$version_updates[$class_name]))
 				{
-					$this->log_msg(__("Updated plugin: ", 'sk2') . "<em>" . $plugin[1]->name . "</em> " . sprintf(__("(to version: %d).", 'sk2'), $plugin[1]->version), 5);
-					$version_updates[$plugin[2]] = $plugin[1]->version;
+					$this->log_msg(__("Updated plugin: ", 'sk2') . "<em>" . $plugin[1]->name . "</em> " . sprintf(__("(to version: %d).", 'sk2'), $plugin[1]->plugin_version), 5);
+					$version_updates[$plugin[2]] = $plugin[1]->plugin_version;
 				}
 				else
-					$this->log_msg(__("Failed to update plugin: ", 'sk2') . "<em>" . $plugin[1]->name . "</em> " . sprintf(__("(to version: %d).", 'sk2'), $plugin[1]->version), 8);
+					$this->log_msg(__("Failed to update plugin: ", 'sk2') . "<em>" . $plugin[1]->name . "</em> " . sprintf(__("(to version: %d).", 'sk2'), $plugin[1]->plugin_version), 8);
 			}
 		}
 		
@@ -525,6 +538,32 @@ class sk2_core
 				$this->log_msg(__("Successfully created index for SQL table: ", 'sk2') . sk2_kSpamTable . ".", 5, false);
 		}
 	
+		// modifying WP's tables to work correctly...
+		// Still returns success on SQL failure (so it doesn't keep trying adding indices in case they are already there or the tables have been otherwise modified)
+		$query = "ALTER TABLE `" . $wpdb->comments . "` ADD INDEX `comment_date_gmt` ( `comment_date_gmt`)";
+
+		$wpdb->query($query);
+		if (mysql_error())
+			$this->log_msg(__("Could not alter SQL table: ", 'sk2') . $wpdb->comments  . ".", 10, true);
+		else
+			$this->log_msg(__("Successfully created index for SQL table: ", 'sk2') . $wpdb->comments . ".", 5, false);
+			
+		$query = "ALTER TABLE `" . $wpdb->posts . "` ADD INDEX `post_date` ( `post_date`)";
+
+		$wpdb->query($query);
+		if (mysql_error())
+			$this->log_msg(__("Could not alter SQL table: ", 'sk2') . $wpdb->posts  . ".", 10, true);
+		else
+			$this->log_msg(__("Successfully created index for SQL table: ", 'sk2') . $wpdb->posts . ".", 5, false);
+		
+		$query = "ALTER TABLE `" . $wpdb->posts . "` ADD INDEX `post_date_gmt` ( `post_date_gmt`)";
+
+		$wpdb->query($query);
+		if (mysql_error())
+			$this->log_msg(__("Could not alter SQL table: ", 'sk2') . $wpdb->posts  . ".", 10, true);
+		else
+			$this->log_msg(__("Successfully created index for SQL table: ", 'sk2') . $wpdb->posts . ".", 5, false);
+				
 		return $success;
 	}
 	

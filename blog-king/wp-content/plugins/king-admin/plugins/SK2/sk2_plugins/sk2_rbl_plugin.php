@@ -10,7 +10,7 @@ class sk2_rbl_plugin extends sk2_plugin
 	var $name = "RBL Check";
 	var $author = "James Seward";
 	var $author_email = "james@jamesoff.net";
-	var $plugin_version = 1;
+	var $plugin_version = 2;
 	var $plugin_help_url = "http://wp-plugins.net/wiki/?title=SK2_RBL_Plugin";
 	var $description = "Checks comment IP and URLs with Realtime Blacklist servers (can be added in the Blacklist panel).";
 	var $filter = true;
@@ -200,25 +200,27 @@ class sk2_rbl_plugin extends sk2_plugin
 
 	function update_SQL_schema($cur_version)
 	{
-		global $sk2_blacklist; 
-		
-		foreach (array("opm.blitzed.org", "bl.blbl.org") as $rbl)
+		if ($cur_version == 0)
 		{
-			$sk2_blacklist->add_entry("rbl_server", $rbl, 100, "yes", "default", 100);
-			$this->log_msg(__("Added default IP RBL server entry: ", 'sk2') . $rbl, 4);
-		}
-		
-		//$cur_version == 1 if plugin lacked version previously; 0 if never run before
-		if ((($cur_version == 1) && ($this->plugin_version == 2)) || ($cur_version == 0))
-		{
-			//Yes, a foreach() for one item is a bit pointless, but it's futar-proof
-			foreach (array("uri-bl.blbl.org") as $rbl)
+			global $sk2_blacklist; 
+			
+			foreach (array("opm.blitzed.org", "bl.blbl.org") as $rbl)
 			{
-				$sk2_blacklist->add_entry("rbl_server_uri", $rbl, 100, "yes", "default", 100);
-				$this->log_msg(__("Added default URI RBL server entry: ", 'sk2') . $rbl, 4);
+				$sk2_blacklist->add_entry("rbl_server", $rbl, 100, "yes", "default", 100);
+				$this->log_msg(__("Added default IP RBL server entry: ", 'sk2') . $rbl, 4);
+			}
+			
+			//$cur_version == 1 if plugin lacked version previously; 0 if never run before
+			if ((($cur_version == 1) && ($this->plugin_version == 2)) || ($cur_version == 0))
+			{
+				//Yes, a foreach() for one item is a bit pointless, but it's future-proof
+				foreach (array("uri-bl.blbl.org") as $rbl)
+				{
+					$sk2_blacklist->add_entry("rbl_server_uri", $rbl, 100, "yes", "default", 100);
+					$this->log_msg(__("Added default URI RBL server entry: ", 'sk2') . $rbl, 4);
+				}
 			}
 		}
-
 		return true;
 	}
 	
@@ -329,6 +331,14 @@ class sk2_rbl_plugin extends sk2_plugin
 		
 		$this->log_msg(sprintf(__("Submitted %d IP(s) and %d URI(s) to RBL using GET", 'sk2'), $ipcount, $uricount), 4);
 	}
+
+	function version_update($cur_version)
+	{
+		$this->set_option_value('weight', 0);
+		$this->log_msg(__("Disabling RBL plugin (main server offline).", 'sk2'), 7);
+		return true;
+	}
+
 }
 
 $this->register_plugin("sk2_rbl_plugin", 8);

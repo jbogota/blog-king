@@ -89,7 +89,7 @@ class sk2_blacklist
 
 
 
-	function match_entries($match_type, $match_value, $strict = true, $min_score = 0)
+	function match_entries($match_type, $match_value, $strict = true, $min_score = 0, $limit = 0)
 	{
 		global $wpdb;
 		
@@ -163,6 +163,10 @@ class sk2_blacklist
 					$query_where = "(`value` $sql_match AND `type` = '" . $match_type . "')";
 			break;
 
+			case 'domain_grey':
+					$query_where = "(`value` $sql_match AND `type` = 'domain_grey')";
+			break;
+
 			
 			case 'domain':
 			case 'ip':
@@ -204,7 +208,12 @@ class sk2_blacklist
 				$query_where .= " AND `trust` > $min_trust";
 	
 			$query = "SELECT * FROM `". sk2_kBlacklistTable . "` WHERE $query_where ORDER BY `score` DESC";
+			
+			if ($limit)
+				$query .= ' LIMIT ' . $limit;
 			//echo $query;
+
+
 			$blacklist_rows = $wpdb->get_results($query);
 			if (mysql_error())
 			{
