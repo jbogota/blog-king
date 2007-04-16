@@ -30,7 +30,8 @@ $_tagcache = array();
 $_posttagcache = array();
 $_relatedtagsmap = array();
 
-$typelimitsql = "(post_status = 'publish' OR post_status = 'static')";  // include pages
+$typelimitsql = "(post_type = 'post' OR post_type = 'page')";  // include pages
+$typelimitsql = "(post_type = 'post')";  // don't include pages - comment this out if you want!!
 
 class UltimateTagWarriorCore {
 
@@ -272,8 +273,6 @@ SQL;
 		global $wpdb, $tablepost2tag, $wpdb;
 
 		if (!is_numeric($postID)) return;
-
-		$default = get_option('default_category');
 
 		$categories = $wpdb->get_results("SELECT c.cat_name FROM $wpdb->post2cat p2c INNER JOIN $wpdb->categories c ON p2c.category_id = c.cat_id WHERE p2c.post_id = $postID");
 		$tags = $this->GetTagsForPost($postID);
@@ -1402,12 +1401,13 @@ SQL;
 			$predefinedFormats["commalist"] = array ("default"=>", %taglink%", "first"=>"%taglink%", "none"=>$notagtext );
 			$predefinedFormats["commalistwithtaglabel"] = array ("single"=>"Tag:  %taglink%", "default"=>", %taglink%", "first"=>"Tags: %taglink%", "none"=>$notagtext );
 			$predefinedFormats["commalisticons"] = array ("default"=>", %taglink% %icons%", "first"=>"%taglink% %icons%", "none"=>$notagtext );
+			$predefinedFormats["invisibletechnoraticommalist"] = array ("pre"=>'<span style="display:none">', "default"=>", %technoratitag%", "first"=>"%technoratitag%", 'post'=>'</span>' );
 			$predefinedFormats["technoraticommalist"] = array ("default"=>", %technoratitag%", "first"=>"%technoratitag%", "none"=>$notagtext );
 			$predefinedFormats["technoraticommalistwithlabel"] = array ("default"=>", %technoratitag%", "first"=>"Technorati Tags: %technoratitag%", "none"=>$notagtext );
 			$predefinedFormats["technoraticommalistwithiconlabel"] = array ("default"=>", %technoratitag%", "first"=>"<a href=\"http://www.technorati.com/tag/\"><img src=\"$siteurl/wp-content/plugins$install_directory/technoratiicon.jpg\" alt=\"Technorati\"/></a> %technoratitag%", "none"=>$notagtext );
 			$predefinedFormats["gadabecommalist"] = array ("default"=>", %gadabetag%", "first"=>"%gadabetag%", "none"=>$notagtext );
 			$predefinedFormats["andcommalist"] = array ("default"=>", %taglink% %intersectionlink% %unionlink%", "first"=>"%taglink% %intersectionlink%%unionlink%", "none"=>$notagtext );
-            //new by Gl
+//new by Gl
 			$predefinedFormats["simpleslashlist"] = array ('first'=>'%taglink%', "default"=>" | %taglink% ", "none"=>__("No Tags", $lzndomain) );
 			$predefinedFormats["postbrlist"] = array ("default"=>"%postlink% <br />", "first"=>"<br />%postlink%<br />", "none"=> __("No Related Posts", $lzndomain));
 			$predefinedFormats["postslashlist"] = array ("default"=>" | %postlink% ", "first"=>"%postlink%", "none"=> __("z.Z. keine verwandten Artikel", $lzndomain));
@@ -1540,7 +1540,7 @@ CSS;
 Retrieves the posts for the tags specified in get_query_var("tag").  Gets the intersection when there are multiple tags.
 */
 function ultimate_get_posts() {
-	global $wpdb, $table_prefix, $posts, $id, $wp_query, $request, $utw;
+	global $wpdb, $table_prefix, $posts, $id, $wp_query, $request, $utw, $typelimitsql;
 	$tabletags = $table_prefix . 'tags';
 	$tablepost2tag = $table_prefix . "post2tag";
 
@@ -1562,10 +1562,11 @@ function ultimate_get_posts() {
 
 	$tags = array_unique($tags);
 	$tagcount = count($tags);
-
+	
 	if (strpos($request, "HAVING COUNT(ID)") == false && !$or_query) {
-		$request = preg_replace("/GROUP BY +$wpdb->posts.ID /", "GROUP BY $wpdb->posts.ID HAVING COUNT(ID) = $tagcount ", $request);
+		$request = preg_replace("/ORDER BY/", "HAVING COUNT(ID) = $tagcount ORDER BY", $request);
 	}
+	$request = preg_replace("/post_type = 'post'/","$typelimitsql", $request);
 
 	$posts = $wpdb->get_results($request);
 	// As requested by Splee and copperleaf
