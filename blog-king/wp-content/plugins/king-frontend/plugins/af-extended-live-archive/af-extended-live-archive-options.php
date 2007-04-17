@@ -14,7 +14,8 @@ function af_ela_info($show='') {
 	switch($show) {
 	case 'currentversion' :
 		$plugins= get_plugins();
-    	$info = $plugins['af-extended-live-archive/af-extended-live-archive.php']['Version'];
+//    	$info = $plugins['af-extended-live-archive/af-extended-live-archive.php']['Version'];
+    	$info = '0.10beta-r18';
     	break;
     case 'localeversion' :
     	$info = '9918';
