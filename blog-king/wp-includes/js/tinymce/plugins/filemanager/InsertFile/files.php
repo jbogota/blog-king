@@ -262,65 +262,26 @@ function draw_no_dir() {
         <head>
                 <title>File Browser</title>
                 <?php
-                       
+
                         echo '<meta http-equiv="Content-Type" content="text/html; charset='.$MY_CHARSET.'" />'."\n";
-                        echo '<meta name="author" content="AlRashid, www: http://alrashid.klokan.sk; mailto:alrashid@klokan.sk" />'."\n";
-                ?>
+                 ?>
 
                 <style type="text/css">
                         <!--
-                        body {
-                                font-family:        Verdana, Helvetica, Arial, Sans-Serif;
-                                font:        message-box;
-                                background:        ThreedFace;
-                        }
-                        code {
-                                font-size:        1em;
-                        }
+                        body {font-family:Verdana, Helvetica, Arial, Sans-Serif; font:message-box;background:ThreedFace;}
+                        code {font-size: 1em; }
 
-                        a {
-                                color: black;
-                        }
+                        a {color: black;}
 
-                        a:visited {
-                                color: black;
-                        }
-                        .selected a {
-        background:        Highlight;
-        color:                HighlightText;
-                        }
-                        .selected a:visited {
-        background:        Highlight;
-        color:                HighlightText;
-                        }
-
-
-.selected {
-        background:        Highlight;
-        color:                HighlightText;
-}
-
-
-/*
-table {
-        border-collapse:        collapse;
-        border:                                1px solid ThreeDShadow;
-        border:                                1px solid;
-        border-color:                ThreeDShadow ThreeDHighLight
-                                                ThreeDHighLight ThreeDShadow;
-
-        background:                        Window;
-}
-*/
-td {
-        font:                                icon;
-        padding:                        2px 5px;
-        cursor:                                default;
-        -moz-user-select:        none;
-}
+                        a:visited {color: black; }
+                        .selected a {background: Highlight;color: HighlightText;}
+                        .selected a:visited { background:Highlight; color:HighlightText; }
+                        .selected {background:Highlight;color:HighlightText;}
+                        td {font:icon;padding:2px 5px;cursor:default;-moz-user-select:none;}
                         -->
                 </style>
         <link type="text/css" rel="StyleSheet" href="css/sortabletable.css" />
+        <link type="text/css" rel="StyleSheet" href="css/filemanager.css" />
         <script type="text/javascript" src="js/sortabletable.js"></script>
         <script type="text/javascript" src="js/selectableelements.js"></script>
         <script type="text/javascript" src="js/selectabletablerows.js"></script>
@@ -547,9 +508,10 @@ $t_folders = '<table class="sort-table" id="tableFolders" onselectstart="return 
                                 $entries_cnt++;
                                 $time = filemtime($absolutePath);
                                 $parsed_time = parse_time($time);
+                                #<td width="4%"><img src="img/ext/folder_small.gif" width="16" height="16" border="0" alt="'.$entry.'" /></td>
                                 $t_folders .= '<tr id="D'.$folderNb.'">
-                                <td width="4%"><img src="img/ext/folder_small.gif" width="16" height="16" border="0" alt="'.$entry.'" /></td>
-                                <td width="50%"><div style="height:15px; overflow:hidden;"><a href="javascript:changeDir('.$folderNb.');" title="'.$entry.'">'.$entry.'</a></div></td>
+
+                                <td width="50%"><div style="height:15px; overflow:hidden;"><a class="folder" href="javascript:changeDir('.$folderNb.');" title="'.$entry.'">'.$entry.'</a></div></td>
                                 <td width="18%" align="right">'._filemanager_folder.'</td>
                                 <td width="25%">'.$parsed_time.'</td>
                                 <td width="0px" style="display: none;">&nbsp;</td>
@@ -568,10 +530,15 @@ $t_folders = '<table class="sort-table" id="tableFolders" onselectstart="return 
                                 $time = filemtime($absolutePath);
                                 $parsed_size = parse_size($size);
                                 $parsed_time = parse_time($time);
-                                $parsed_icon = 'img/ext/'.parse_icon($ext);
+//                                $parsed_icon = 'img/ext/'.parse_icon($ext);
+                                $css_class = $ext.'_bg';
+
+								#need to take img out and replace by css style
+								# <td width="4%"><img src="'.$parsed_icon.'" width="16" height="16" border="0" alt="'.$entry.'" /></td>
                                 $t_files .= '<tr id="F'.$fileNb++.'">
-                                <td width="4%"><img src="'.$parsed_icon.'" width="16" height="16" border="0" alt="'.$entry.'" /></td>
-                                <td width="50%"><div style="height:15px; overflow:hidden;"><a href="javascript:;" onClick="javascript:fileSelected(\''.$MY_BASE_URL.$relativePath.'\',\''.$entry.'\',\''.$parsed_icon.'\',\''.$parsed_size.'\',\''.$parsed_time.'\');">'.$entry.'</div></td>
+                                <td width="50%"><div  style="height:15px; overflow:hidden;"
+                                					><a class="'.$css_class.'" href="javascript:;" onClick="javascript:fileSelected(\''.$MY_BASE_URL.$relativePath.'\',\''.$entry.'\',\''.$parsed_icon.'\',\''.$parsed_size.'\',\''.$parsed_time.'\');">'.$entry.
+                                					'</div></td>
                                 <td width="18%" align="right">'.$parsed_size.'</td>
                                 <td width="25%">'.$parsed_time.'</td>
                                 <td width="0px" style="display: none;">'.$ext.'</td>
