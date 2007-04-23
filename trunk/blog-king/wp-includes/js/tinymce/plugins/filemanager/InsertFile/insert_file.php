@@ -74,6 +74,7 @@ else
                 var editor_url   = tinyMCE.baseURL;
                 var plugin_url = "/plugins/filemanager/InsertFile/";
 				var icon_url = "img/ext/";
+
 				document.getElementById('f_url').value = tinyMCE.getWindowArg('href');
 				document.getElementById('f_caption').value = tinyMCE.getWindowArg('title');
 
@@ -81,6 +82,7 @@ else
 				var file = tinyMCE.getWindowArg('href');
 				var file_name = file.replace(editor_url+plugin_url+icon_url, '', 'gi');
 				var file_ext = getExtension(file_name);
+
 				var icon_type = file_ext+'_small.gif';
 				f_icon_value = icon_url+icon_type;
 
@@ -127,25 +129,25 @@ else
 						alert('Please reselect the file to insert the Size and/or Date value');
 						return false;
 						}
-				var formObj = document.forms[0];
-        		var editor_url   = tinyMCE.baseURL;
-                var plugin_url = "/plugins/filemanager/InsertFile/";
+				var formObj		= document.forms[0];
+        		var editor_url  = tinyMCE.baseURL;
+                var plugin_url	= "/plugins/filemanager/InsertFile/";
 
-				var f_url = formObj.f_url.value;
-				var f_caption = formObj.f_caption.value;
-				var f_icon = formObj.f_icon.value;
-				var f_icon_url = editor_url+plugin_url+f_icon;
-				var f_size = formObj.f_size.value;
-				var f_date = formObj.f_date.value;
+				var f_url		= formObj.f_url.value;
+				var f_caption 	= formObj.f_caption.value;
+				var f_icon 		= formObj.f_icon.value;
+				var f_icon_url 	= editor_url+plugin_url+f_icon;
+				var f_size 		= formObj.f_size.value;
+				var f_date		= formObj.f_date.value;
 
 				var args = Array();
-					args['href'] = f_url;
+					args['href']	= f_url;
 					args['a_title'] = f_caption;
 					args['caption'] = f_caption;
-					args['i_alt'] = f_caption;
-					args['i_src'] = f_icon_url;
-					args['f_size'] = f_size;
-					args['f_date'] = f_date;
+					args['i_alt']	= f_caption;
+					args['i_src']	= f_icon_url;
+					args['f_size']	= f_size;
+					args['f_date']	= f_date;
 
 					args['icon'] = false;
 					args['size'] = false;
@@ -157,7 +159,7 @@ else
 					args['icon'] = false;
 				}
 				if (formObj.f_addsize.checked==true) {
-				args['size'] = true;
+					args['size'] = true;
 				}else{
 					args['size'] = false;
 				}

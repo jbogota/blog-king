@@ -1,0 +1,28 @@
+
+/* specific bg images for each img type in iframed content list */
+a{padding:000 18px;}
+	a.folder{background: url(../img/ext/folder_small.gif) no-repeat left top;}
+
+
+	a.binary_bg{background: url(../img/ext/binary_small.gif) no-repeat left top;}
+	a.def_bg{background: url(../img/ext/def_small.gif) no-repeat left top;}
+	a.doc_bg{background: url(../img/ext/doc_small.gif) no-repeat left top;}
+	a.eps_bg{background: url(../img/ext/eps_small.gif) no-repeat left top;}
+	a.flash_bg{background: url(../img/ext/flash_small.gif) no-repeat left top;}
+	a.gif_bg{background: url(../img/ext/gif_small.gif) no-repeat left top;}
+	a.gz_bg{background: url(../img/ext/gz_small.gif) no-repeat left top;}
+	a.html_bg{background: url(../img/ext/html_small.gif) no-repeat left top;}
+	a.image_bg{background: url(../img/ext/image_small.gif) no-repeat left top;}
+	a.jpg_bg{background: url(../img/ext/jpg_small.gif) no-repeat left top;}
+	a.mmap_bg{background: url(../img/ext/mmap_small.gif) no-repeat left top;}
+	a.mov_bg{background: url(../img/ext/mov_small.gif) no-repeat left top;}
+	a.no_bg{background: url(../img/ext/no_small.gif) no-repeat left top;}
+	a.pdf_bg{background: url(../img/ext/pdf_small.gif) no-repeat left top;}
+	a.png_bg{background: url(../img/ext/png_small.gif) no-repeat left top;}
+	a.ppt_bg{background: url(../img/ext/ppt_small.gif) no-repeat left top;}
+	a.psd_bg{background: url(../img/ext/psd_small.gif) no-repeat left top;}
+	a.rar_bg{background: url(../img/ext/rar_small.gif) no-repeat left top;}
+	a.script_bg{background: url(../img/ext/srcipt_small.gif) no-repeat left top;}
+	a.txt_bg{background: url(../img/ext/txt_small.gif) no-repeat left top;}
+	a.xls_bg{background: url(../img/ext/xls_small.gif) no-repeat left top;}
+	a.zip_bg{background: url(../img/ext/zip_small.gif) no-repeat left top;}
