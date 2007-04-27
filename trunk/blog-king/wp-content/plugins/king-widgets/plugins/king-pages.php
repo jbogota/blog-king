@@ -4,7 +4,7 @@ Plugin Name: King_Pages_Widget
 Plugin URI: http://www.blog.mediaprojekte.de/cms-systeme/wordpress-plugins/wordpress-widget-king-pages/
 Description: Adds a sidebar Pages widget and lets users configure every Aspect of the Pages Navigation list.
 Author: Georg Leciejewski
-Version: 0.53
+Version: 0.55
 Author URI: http://www.blog.mediaprojekte.de
 */
 
@@ -19,7 +19,7 @@ Author URI: http://www.blog.mediaprojekte.de
 	along with this program; if not, write to the Free Software
 	Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 */
-define("KINGPAGESVERSION",  "053");
+define("KINGPAGESVERSION",  "055");
 require_once(ABSPATH . 'wp-content/plugins/king-includes/library/king_widget_functions.php');
 /**
 * @desc init Put functions into one big function we'll call at the plugins_loaded action.
@@ -34,7 +34,10 @@ function widget_king_pages_init() {
 		return;
 
 	/**
-	* @desc Output of plugin composing the list_cats function call
+	* @desc Output of widget composing the list_pages function call
+	* 		this function is called for every pages widget
+	* @param array $args - aditional arguments passed to the wp_list_pages filter by some other plugins
+	* @param int $number - the widget identifier
 	* @author Georg Leciejewski
 	*/
 	function widget_king_pages($args, $number = 1) {
@@ -42,124 +45,67 @@ function widget_king_pages_init() {
 		# $args is an array of strings that help widgets to conform to
 		# the active theme: before_widget, before_title, after_widget,
 		# and after_title are the array keys. Default tags: li and h2.
+		$data = array();
 		extract($args,EXTR_PREFIX_ALL,"default");
 		$options 			= get_option('widget_king_pages');
-		$title 				= $options[$number]['title'];
-		$child_of 			= $options[$number]['child_of'] ? $options[$number]['child_of'] : 0;
-		$sort_column		= $options[$number]['sort_column'];
-		$sort_order			= $options[$number]['sort_order'];
-		$exclude 			= $options[$number]['exclude'];
-		$depth 				= $options[$number]['depth'];
-		$show_date	 		= $options[$number]['show_date'];
-		$date_format 		= $options[$number]['date_format'];
-		$sort_order			= $options[$number]['sort_order'];
-		$title_li 			= $options[$number]['title_li'];
+		$data['title'] 		= $options[$number]['title'];
+		$data['child_of']	= $options[$number]['child_of'] ? $options[$number]['child_of'] : 0;
+		$data['sort_column']= $options[$number]['sort_column'];
+		$data['sort_order']	= $options[$number]['sort_order'];
+		$data['exclude'] 	= $options[$number]['exclude'];
+		$data['depth'] 		= $options[$number]['depth'];
+		$data['show_date']	= $options[$number]['show_date'];
+		$data['date_format']= $options[$number]['date_format'];
+		$data['sort_order']	= $options[$number]['sort_order'];
+		$data['title_li'] 	= $options[$number]['title_li'];
+		$data['foldlist'] 	= $options[$number]['foldlist'];
 
-        $show_category		= $options[$number]['show_category'] ? 1 : 0;
-		$category_id		= $options[$number]['category_id'];
-		$show_on_site_area	= $options[$number]['show_on_site_area'] ? 1 : 0;
-		$show_not_on_site_area	= $options[$number]['show_not_on_site_area'] ? 1 : 0;
-		$site_area_id		= $options[$number]['site_area_id'];
-		$site_area			= $options[$number]['site_area'];
-        $before_widget		= empty($options[$number]['before_widget']) ? $default_before_widget : stripslashes($options[$number]['before_widget']);
-		$before_widget_title= empty($options[$number]['before_widget_title']) ? $default_before_title : stripslashes($options[$number]['before_widget_title']);
-		$after_widget_title = empty($options[$number]['after_widget_title'] ) ? $default_after_title : stripslashes($options[$number]['after_widget_title']) ;
-		$after_widget 		= empty($options[$number]['after_widget']) ? $default_after_widget : stripslashes($options[$number]['after_widget']) ;
+        $data['show_category'] 			= $options[$number]['show_category'] ? 1 : 0;
+		$data['category_id'] 			= $options[$number]['category_id'];
+		$data['show_on_site_area'] 		= $options[$number]['show_on_site_area'] ? 1 : 0;
+		$data['show_not_on_site_area'] 	= $options[$number]['show_not_on_site_area'] ? 1 : 0;
+		$data['site_area_id'] 			= $options[$number]['site_area_id'];
+		$data['site_area'] 				= $options[$number]['site_area'];
+        $data['before_widget'] 			= empty($options[$number]['before_widget']) ? $default_before_widget : stripslashes($options[$number]['before_widget']);
+		$data['before_widget_title'] 	= empty($options[$number]['before_widget_title']) ? $default_before_title : stripslashes($options[$number]['before_widget_title']);
+		$data['after_widget_title']  	= empty($options[$number]['after_widget_title'] ) ? $default_after_title : stripslashes($options[$number]['after_widget_title']) ;
+		$data['after_widget']  			= empty($options[$number]['after_widget']) ? $default_after_widget : stripslashes($options[$number]['after_widget']) ;
 
+		$already_out = null;
 
-		if( !empty($show_category) )
+		if( !empty($data['show_category']) )
 		{ # if in category
 			$post = $wp_query->post;
-			if ( in_category($category_id) )
+			if ( king_in_category($data['category_id']) )
 			{
-                echo '<!-- Start King Pages ' . $number . ' -->'."\n";
-				echo $before_widget."\n";
-				echo $before_widget_title."\n";
-				echo $title ."\n";
-				echo $after_widget_title."\n";
-
-				if(function_exists('wswwpx_fold_page_list') && !empty($options[$number]['foldlist']))
-				{
-					wswwpx_fold_page_list("child_of=$child_of&sort_column=$sort_column&sort_order=$sort_order&exclude=$exclude&depth=$depth&show_date=$show_date&date_format=$date_format&title_li=$title_li");
-				}
-				else
-				{
-					wp_list_pages("child_of=$child_of&sort_column=$sort_column&sort_order=$sort_order&exclude=$exclude&depth=$depth&show_date=$show_date&date_format=$date_format&title_li=$title_li");
-				}
-                echo $after_widget."\n";
- 				echo '<!-- End Pages -->'."\n";
+                king_pages_output($data, $number);
 				$already_out = 1;
 			}
 		}
 
-		if( !empty($show_on_site_area) )
-		{ # sitearea Output
+		if( !empty($data['show_on_site_area']) )
+		{ # display widget on special sitearea
 
-			if ( $site_area($site_area_id) && $already_out != 1)
+			if ( king_in_site_area($data['site_area'], $data['site_area_id']) && $already_out != 1)
 			{
-                echo '<!-- Start King Pages ' . $number . ' -->'."\n";
-				echo $before_widget."\n";
-				echo $before_widget_title."\n";
-				echo $title ."\n";
-				echo $after_widget_title."\n";
-
-				if(function_exists('wswwpx_fold_page_list') && !empty($options[$number]['foldlist']))
-				{
-					wswwpx_fold_page_list("child_of=$child_of&sort_column=$sort_column&sort_order=$sort_order&exclude=$exclude&depth=$depth&show_date=$show_date&date_format=$date_format&title_li=$title_li");
-				}
-				else
-				{
-					wp_list_pages("child_of=$child_of&sort_column=$sort_column&sort_order=$sort_order&exclude=$exclude&depth=$depth&show_date=$show_date&date_format=$date_format&title_li=$title_li");
-				}
-                echo $after_widget."\n";
- 				echo '<!-- End Pages -->'."\n";
+                king_pages_output($data, $number);
 				$already_out = 1;
 			}
 		}
-		elseif(!empty($show_not_on_site_area))
-		{ # if not in the site area
-            if (!$site_area($site_area_id) && $already_out != 1)
+		elseif(!empty($data['show_not_on_site_area']))
+		{ # display widget everwhere but in this sitearea
+            if (!king_in_site_area($data['site_area'], $data['site_area_id']) && $already_out != 1)
             {
-                 echo '<!-- Start King Pages ' . $number . ' -->'."\n";
-				echo $before_widget."\n";
-				echo $before_widget_title."\n";
-				echo $title ."\n";
-				echo $after_widget_title."\n";
-
-				if(function_exists('wswwpx_fold_page_list') && !empty($options[$number]['foldlist']))
-				{
-					wswwpx_fold_page_list("child_of=$child_of&sort_column=$sort_column&sort_order=$sort_order&exclude=$exclude&depth=$depth&show_date=$show_date&date_format=$date_format&title_li=$title_li");
-				}
-				else
-				{
-					wp_list_pages("child_of=$child_of&sort_column=$sort_column&sort_order=$sort_order&exclude=$exclude&depth=$depth&show_date=$show_date&date_format=$date_format&title_li=$title_li");
-				}
-                echo $after_widget."\n";
- 				echo '<!-- End Pages -->'."\n";
+                king_pages_output($data, $number);
 			}
 		}
 
-		if(empty($show_not_on_site_area) && empty($show_on_site_area) && empty($show_category))
+		if(empty($data['show_not_on_site_area']) && empty($data['show_on_site_area']) && empty($data['show_category']))
 		{# always show
-			echo '<!-- Start King Pages ' . $number . ' -->'."\n";
-			echo $before_widget."\n";
-			echo $before_widget_title."\n";
-			echo $title ."\n";
-			echo $after_widget_title."\n";
-
-			if(function_exists('wswwpx_fold_page_list') && !empty($options[$number]['foldlist']))
-			{
-				wswwpx_fold_page_list("child_of=$child_of&sort_column=$sort_column&sort_order=$sort_order&exclude=$exclude&depth=$depth&show_date=$show_date&date_format=$date_format&title_li=$title_li");
-			}
-			else
-			{
-				wp_list_pages("child_of=$child_of&sort_column=$sort_column&sort_order=$sort_order&exclude=$exclude&depth=$depth&show_date=$show_date&date_format=$date_format&title_li=$title_li");
-			}
-			echo $after_widget."\n";
-			echo '<!-- End Pages -->'."\n";
+			king_pages_output($data, $number);
 		}
 
-
+		#debug output
 		if (!empty($options[$number]['debug']))
 			echo "<h2>__('Your Menu Options are:', 'widgetKing')</h2>
 				child_of=$child_of <br>
@@ -425,6 +371,51 @@ function widget_king_pages_init() {
 
 add_action('plugins_loaded', 'widget_king_pages_init');
 
+/**
+*@desc the output of the pages menu
+* @param array $data - holding the switches
+* @param int $number - the current widget number
+*/
+function king_pages_output($data,$number)
+{
+	echo '<!-- Start King Pages ' . $number . ' -->'."\n";
+	echo $data['before_widget']."\n";
+	echo $data['before_widget_title']."\n";
+	echo $data['title'] ."\n";
+	echo $data['after_widget_title']."\n";
+
+	if(function_exists('wswwpx_fold_page_list') && !empty($data['foldlist']))
+	{# to be optimised
+		wswwpx_fold_page_list(array(
+						'child_of'		=>$data['child_of'],
+						'sort_column' 	=>$data['sort_column'],
+						'sort_order' 	=>$data['sort_order'],
+						'exclude' 		=>$data['exclude'],
+						'depth' 		=>$data['depth'],
+						'show_date' 	=>$data['show_date'],
+						'date_format' 	=>$data['date_format'],
+						'title_li' 		=>$data['title_li'],
+						));
+	}
+	else
+	{
+		wp_list_pages(array(
+						'child_of'		=>$data['child_of'],
+						'sort_column' 	=>$data['sort_column'],
+						'sort_order' 	=>$data['sort_order'],
+						'exclude' 		=>$data['exclude'],
+						'depth' 		=>$data['depth'],
+						'show_date' 	=>$data['show_date'],
+						'date_format' 	=>$data['date_format'],
+						'title_li' 		=>$data['title_li'],
+						));
+
+	}
+	echo  $data['after_widget']."\n";
+	echo '<!-- End King Pages  ' . $number . ' -->'."\n";
+
+    return;
+}
 /**
 * @desc Version Check Heading
 */
