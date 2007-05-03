@@ -330,7 +330,7 @@ function king_in_category($categories)
 
 	foreach($cat_ids as $cat_id)
 	{
-        if ( isset( $category_cache[$post->ID][$cat_id] ) )
+        if (in_category($cat_id) )
         {
 			return true;
 		}
