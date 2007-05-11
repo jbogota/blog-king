@@ -30,7 +30,7 @@ if (isset($_REQUEST['path'])) {
         $path = unsanitize($path);
         $path = pathSlashes($path);
 } else {
-        $path = '';
+        $path = '/';
 }
 
 $MY_PATH = $path;
@@ -518,7 +518,7 @@ $t_folders = '<table class="sort-table" id="tableFolders" onselectstart="return 
                                 <td width="0px" style="display: none;">&nbsp;</td>
                             <td width="0px" style="display: none;">'.$time.'</td>
                                 </tr>';
-                                $folderJSArray .= "['images/ext/folder_small.gif', '".sanitize($entry)."', '"._filemanager_folder."', '".$parsed_time."'],\n";
+                                $folderJSArray .= "['img/ext/folder_small.gif', '".sanitize($entry)."', '"._filemanager_folder."', '".$parsed_time."'],\n";
                 $folderNb++;
                         } else {
                                 $entries_cnt++;
@@ -530,7 +530,7 @@ $t_folders = '<table class="sort-table" id="tableFolders" onselectstart="return 
                                 $time = filemtime($absolutePath);
                                 $parsed_size = parse_size($size);
                                 $parsed_time = parse_time($time);
-//                                $parsed_icon = 'img/ext/'.parse_icon($ext);
+                                $parsed_icon = 'img/ext/'.parse_icon($ext);
                                 $css_class = $ext.'_bg';
 
 								#need to take img out and replace by css style
