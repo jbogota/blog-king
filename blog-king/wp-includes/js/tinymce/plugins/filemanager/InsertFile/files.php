@@ -30,11 +30,11 @@ if (isset($_REQUEST['path'])) {
         $path = unsanitize($path);
         $path = pathSlashes($path);
 } else {
-        $path = '/';
+        $path = '';
 }
 
 $MY_PATH = $path;
-$MY_UP_PATH = substr($MY_PATH,0,strrpos(substr($MY_PATH,0,strlen($MY_PATH)-1),'/'))."/";
+$MY_UP_PATH = substr($MY_PATH,0,strrpos(substr($MY_PATH,0,strlen($MY_PATH)-1),'/'));
 //echo "PATH:".$MY_PATH;
 //echo "<br>UPP:".$MY_UP_PATH;
 
@@ -361,7 +361,7 @@ function fileSelected(filename, caption, icon, size, date) {
         topDoc.f_icon.value = icon;
         topDoc.f_size.value = size;
         topDoc.f_date.value = date;
-        
+
 }
 
 function updateDir() {

@@ -13,7 +13,7 @@ nocache_headers();
 $KMConfig = get_settings('king-filemanager') ;
 
 
-$MY_DOCUMENT_ROOT 		= $KMConfig['document_root'].'/';//'/www/htdocs/../wp-content/dateien/';
+$MY_DOCUMENT_ROOT 		= $KMConfig['document_root'].'/';//'/www/htdocs/../wp-content/upload';
 $MY_BASE_URL 			= $KMConfig['download_url']; //'http://www.url.de/wp-content/upload';
 $MY_URL_TO_OPEN_FILE 	= $KMConfig['download_url']; //'http://www.url.de/wp-content/upload';
 $MY_ALLOW_EXTENSIONS 	= explode(',', $KMConfig['allowed_ext']);
@@ -30,8 +30,8 @@ $MY_ALLOW_MOVE 			= true;
 $MY_ALLOW_UPLOAD 		= true;
 
 $MY_NAME 				= 'insertfiledialog';
-$MY_PATH 				= '/';
-$MY_UP_PATH 			= '/';
+$MY_PATH 				= '';
+$MY_UP_PATH 			= '';
 function parse_icon($ext) {
 		switch (strtolower($ext)) {
 				case 'doc': return 'doc_small.gif';
