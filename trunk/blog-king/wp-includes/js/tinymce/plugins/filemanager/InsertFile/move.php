@@ -12,7 +12,7 @@
 //Some includes
 
 require("config.inc.php");
-include ("langs/de.php");   // Language file
+include ("../langs/de.php");   // Language file
 include ("functions.php");
 ?>
 

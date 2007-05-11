@@ -14,7 +14,7 @@ var TinyMCE_filemanager = {
 			switch (control_name) {
 				case "filemanager":
 					return tinyMCE.getButtonHTML(control_name, 'lang_insert_filemanager', '{$pluginurl}/images/filemanager.gif', 'mceFileManager',true);
-				/*	return '<img id="{$editor_id}_filemanager" src="{$pluginurl}/images/filemanager.gif" title="{$lang_insert_filemanager}" width="20" height="20" class="mceButtonNormal" onmouseover="tinyMCE.switchClass(this,\'mceButtonOver\');" onmouseout="tinyMCE.restoreClass(this);" onmousedown="tinyMCE.restoreAndSwitchClass(this,\'mceButtonDown\');" onclick="tinyMCE.execInstanceCommand(\'{$editor_id}\',\'mceFileManager\', true);">';*/
+
 		}
 		return "";
 	},
@@ -89,7 +89,7 @@ var TinyMCE_filemanager = {
 	                    }
 
 	                html = '';
-	                html += '<a href="'+href+'" title="'+a_title+'">';
+	                html += '<a class="fileLink" href="'+href+'" title="'+a_title+'">';
 	                if (icon == true){
 	                    html += '<img src="' +i_src+ '" border="0" alt="'+i_alt+'" />&nbsp;';
 	                }
@@ -141,7 +141,7 @@ var TinyMCE_filemanager = {
 	                    }
 
 	                html = '';
-	                html += '<a href="'+href+'" title="'+a_title+'">';
+	                html += '<a class="fileLink" href="'+href+'" title="'+a_title+'">';
 	                if (icon == true){
 	                    html += '<img src="' +i_src+ '" border="0" alt="'+i_alt+'" />&nbsp;';
 	                }

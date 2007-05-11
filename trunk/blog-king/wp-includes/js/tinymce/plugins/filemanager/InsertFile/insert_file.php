@@ -19,7 +19,6 @@ else
 	include ('../langs/en.php');
 }
 
-
 ?>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -57,13 +56,13 @@ else
 				<?php
 				if (is_array($MY_DENY_EXTENSIONS)) {
 						echo 'var DenyExtensions = [';
-						foreach($MY_DENY_EXTENSIONS as $value) echo '"'.$value.'", ';
+						foreach($MY_DENY_EXTENSIONS as $value) echo '"'.$value.'",';
 						echo '""];
 						';
 				}
 				if (is_array($MY_ALLOW_EXTENSIONS)) {
 						echo 'var AllowExtensions = [';
-						foreach($MY_ALLOW_EXTENSIONS as $value) echo '"'.$value.'", ';
+						foreach($MY_ALLOW_EXTENSIONS as $value) echo '"'.$value.'",';
 						echo '""];
 						';
 				}
@@ -74,7 +73,6 @@ else
                 var editor_url   = tinyMCE.baseURL;
                 var plugin_url = "/plugins/filemanager/InsertFile/";
 				var icon_url = "img/ext/";
-
 				document.getElementById('f_url').value = tinyMCE.getWindowArg('href');
 				document.getElementById('f_caption').value = tinyMCE.getWindowArg('title');
 
@@ -82,7 +80,6 @@ else
 				var file = tinyMCE.getWindowArg('href');
 				var file_name = file.replace(editor_url+plugin_url+icon_url, '', 'gi');
 				var file_ext = getExtension(file_name);
-
 				var icon_type = file_ext+'_small.gif';
 				f_icon_value = icon_url+icon_type;
 
@@ -111,72 +108,72 @@ else
 					}else{
 						formObj.f_date.value = tinyMCE.getWindowArg('date');
 					}
-				formObj.insert.value = tinyMCE.getLang('lang_' + tinyMCE.getWindowArg('action'), 'Insert', true);
+					formObj.insert.value = tinyMCE.getLang('lang_' + tinyMCE.getWindowArg('action'), 'Insert', true);
 				};
 
 				function onOK() {
-						if (window.opener) {
+					if (window.opener) {
 						var formObj = document.forms[0];
 						if (formObj.f_url.value == '' || formObj.f_caption.value == ''){
 							alert("You must select a file (or enter a URL) and a Caption, or Cancel.");
 							return false;
 						}
 						if (formObj.f_addsize.checked == true && (formObj.f_size.value == '' || formObj.f_size.value == 'null')){
-						alert('Please reselect the file to insert the Size and/or Date value');
-						return false;
+							alert('Please reselect the file to insert the Size and/or Date value');
+							return false;
 						}
 						if (formObj.f_adddate.checked == true && (formObj.f_date.value == '' || formObj.f_date.value == 'null')){
-						alert('Please reselect the file to insert the Size and/or Date value');
-						return false;
+							alert('Please reselect the file to insert the Size and/or Date value');
+							return false;
 						}
-				var formObj		= document.forms[0];
-        		var editor_url  = tinyMCE.baseURL;
-                var plugin_url	= "/plugins/filemanager/InsertFile/";
+						var formObj = document.forms[0];
+        				var editor_url   = tinyMCE.baseURL;
+			            var plugin_url = "/plugins/filemanager/InsertFile/";
 
-				var f_url		= formObj.f_url.value;
-				var f_caption 	= formObj.f_caption.value;
-				var f_icon 		= formObj.f_icon.value;
-				var f_icon_url 	= editor_url+plugin_url+f_icon;
-				var f_size 		= formObj.f_size.value;
-				var f_date		= formObj.f_date.value;
+						var f_url = formObj.f_url.value;
+						var f_caption = formObj.f_caption.value;
+						var f_icon = formObj.f_icon.value;
+						var f_icon_url = editor_url+plugin_url+f_icon;
+						var f_size = formObj.f_size.value;
+						var f_date = formObj.f_date.value;
 
-				var args = Array();
-					args['href']	= f_url;
-					args['a_title'] = f_caption;
-					args['caption'] = f_caption;
-					args['i_alt']	= f_caption;
-					args['i_src']	= f_icon_url;
-					args['f_size']	= f_size;
-					args['f_date']	= f_date;
+						var args = Array();
+							args['href'] = f_url;
+							args['a_title'] = f_caption;
+							args['caption'] = f_caption;
+							args['i_alt'] = f_caption;
+							args['i_src'] = f_icon_url;
+							args['f_size'] = f_size;
+							args['f_date'] = f_date;
 
-					args['icon'] = false;
-					args['size'] = false;
-					args['date'] = false;
+							args['icon'] = false;
+							args['size'] = false;
+							args['date'] = false;
 
-				if (formObj.f_addicon.checked==true) {
-					args['icon'] = true;
-				}else{
-					args['icon'] = false;
-				}
-				if (formObj.f_addsize.checked==true) {
-					args['size'] = true;
-				}else{
-					args['size'] = false;
-				}
-				if (formObj.f_adddate.checked==true) {
-					args['date'] = true;
-				}else{
-					args['date'] = false;
-				}
-				tinyMCE.execCommand("mceFileManager",false,args);
-				top.close();
-				}
+						if (formObj.f_addicon.checked==true) {
+							args['icon'] = true;
+						}else{
+							args['icon'] = false;
+						}
+						if (formObj.f_addsize.checked==true) {
+							args['size'] = true;
+						}else{
+							args['size'] = false;
+						}
+						if (formObj.f_adddate.checked==true) {
+							args['date'] = true;
+						}else{
+							args['date'] = false;
+						}
+						tinyMCE.execCommand("mceFileManager",false,args);
+						top.close();
+					}
 
-		};
+				};
 
 				function onCancel() {
-				top.close();
-				return false;
+					top.close();
+					return false;
 				};
 
 				function changeDir(selection) {
@@ -201,129 +198,33 @@ else
 				}
 
 				function newFolder() {
-						var selection = document.forms[0].path;
-						var path = selection.options[selection.selectedIndex].value;
-						var folder = prompt('<?php echo _filemanager_newfolder ?>','');
-						if (folder) {
-							changeLoadingStatus('load');
-								var postForm2 = fileManager.document.getElementById('form2');
-								postForm2.elements["action"].value="createFolder";
-								postForm2.elements["file"].value=folder;
-								postForm2.submit();
-						}
-						return false
+					var selection = document.forms[0].path;
+					var path = selection.options[selection.selectedIndex].value;
+					var folder = prompt('<?php echo _filemanager_newfolder ?>','');
+					if (folder) {
+						changeLoadingStatus('load');
+							var postForm2 = fileManager.document.getElementById('form2');
+							postForm2.elements["action"].value="createFolder";
+							postForm2.elements["file"].value=folder;
+							postForm2.submit();
+					}
+					return false
 				}
 
 				function deleteFile() {
-						var folderItems = fileManager.sta.getSelectedItems();
-						var folderItemsLength = folderItems.length;
-						var fileItems = fileManager.stb.getSelectedItems();
-						var fileItemsLength = fileItems.length;
-						var message = "<?php echo _filemanager_delete ?>";
-			if ((folderItemsLength == 0) && (fileItemsLength == 0)) return false;
-						if (folderItemsLength > 0) {
-								message = message + " " + folderItemsLength + " " + "<?php echo _filemanager_folders ?>";
-						}
-						if (fileItemsLength > 0) {
-								message = message + " " + fileItemsLength + " " + "<?php echo _filemanager_files ?>";
-						}
-						if (confirm(message+" ?")) {
-								var postForm2 = fileManager.document.getElementById('form2');
-								for (var i=0; i<folderItemsLength; i++) {
-										var strId = folderItems[i].getAttribute("id").toString();
-										var trId = parseInt(strId.substring(1, strId.length));
-										var i_field = fileManager.document.createElement('INPUT');
-										i_field.type = 'hidden';
-										i_field.name = 'folders[' + i.toString() + ']';
-										i_field.value = fileManager.folderJSArray[trId][1];
-										postForm2.appendChild(i_field);
-								}
-								for (var i=0; i<fileItemsLength; i++) {
-										var strId = fileItems[i].getAttribute("id").toString();
-										var trId = parseInt(strId.substring(1, strId.length));
-										var i_field = fileManager.document.createElement('INPUT');
-										i_field.type = 'hidden';
-										i_field.name = 'files[' + i.toString() + ']';
-										i_field.value = fileManager.fileJSArray[trId][1];
-										postForm2.appendChild(i_field);
-								}
-								changeLoadingStatus('load');
-								postForm2.elements["action"].value="delete";
-								postForm2.submit();
-						}
-				}
-
-				function renameFile() {
-						var folderItems = fileManager.sta.getSelectedItems();
-						var folderItemsLength = folderItems.length;
-						var fileItems = fileManager.stb.getSelectedItems();
-						var fileItemsLength = fileItems.length;
-						var postForm2 = fileManager.document.getElementById('form2');
-						if ((folderItemsLength == 0) && (fileItemsLength == 0)) return false;
-						if (!confirm('<?php echo _filemanager_renamewarning ?>')) return false;
-						for (var i=0; i<folderItemsLength; i++) {
-								var strId = folderItems[i].getAttribute("id").toString();
-								var trId = parseInt(strId.substring(1, strId.length));
-				var newname = prompt('<?php echo _filemanager_renamefolder ?>', fileManager.folderJSArray[trId][1]);
-								if (!newname) continue;
-								if (!newname == fileManager.folderJSArray[trId][1]) continue;
-								var i_field = fileManager.document.createElement('INPUT');
-								i_field.type = 'hidden';
-								i_field.name = 'folders[' + i.toString() + '][oldname]';
-								i_field.value = fileManager.folderJSArray[trId][1];
-								postForm2.appendChild(i_field);
-								var ii_field = fileManager.document.createElement('INPUT');
-								ii_field.type = 'hidden';
-								ii_field.name = 'folders[' + i.toString() + '][newname]';
-								ii_field.value = newname;
-								postForm2.appendChild(ii_field);
-						}
-						for (var i=0; i<fileItemsLength; i++) {
-								var strId = fileItems[i].getAttribute("id").toString();
-								var trId = parseInt(strId.substring(1, strId.length));
-								var        newname = getNewFileName(fileManager.fileJSArray[trId][1]);
-								if (!newname) continue;
-								if (newname == fileManager.fileJSArray[trId][1]) continue;
-								var i_field = fileManager.document.createElement('INPUT');
-								i_field.type = 'hidden';
-								i_field.name = 'files[' + i.toString() + '][oldname]';
-								i_field.value = fileManager.fileJSArray[trId][1];
-								postForm2.appendChild(i_field);
-								var ii_field = fileManager.document.createElement('INPUT');
-								ii_field.type = 'hidden';
-								ii_field.name = 'files[' + i.toString() + '][newname]';
-								ii_field.value = newname;
-								postForm2.appendChild(ii_field);
-						}
-						changeLoadingStatus('load');
-						postForm2.elements["action"].value="rename";
-						postForm2.submit();
-				}
-
-				function moveFile() {
-						var folderItems = fileManager.sta.getSelectedItems();
-						var folderItemsLength = folderItems.length;
-						var fileItems = fileManager.stb.getSelectedItems();
-						var fileItemsLength = fileItems.length;
-						var postForm2 = fileManager.document.getElementById('form2');
-						if ((folderItemsLength == 0) && (fileItemsLength == 0)) return false;
-						if (!confirm('<?php echo _filemanager_renamewarning ?>')) return false;
-						var postForm2 = fileManager.document.getElementById('form2');
-						Dialog("move.php", function(param) {
-								if (!param) // user must have pressed Cancel
-										return false;
-								else {
-									postForm2.elements["newpath"].value=param['newpath'];
-									moveFiles();
-								}
-						}, null);
-				}
-
-		function moveFiles() {
-						var folderItems = fileManager.sta.getSelectedItems();
-						var folderItemsLength = folderItems.length;
-						var fileItems = fileManager.stb.getSelectedItems();
-						var fileItemsLength = fileItems.length;
+					var folderItems = fileManager.sta.getSelectedItems();
+					var folderItemsLength = folderItems.length;
+					var fileItems = fileManager.stb.getSelectedItems();
+					var fileItemsLength = fileItems.length;
+					var message = "<?php echo _filemanager_delete ?>";
+					if ((folderItemsLength == 0) && (fileItemsLength == 0)) return false;
+					if (folderItemsLength > 0) {
+							message = message + " " + folderItemsLength + " " + "<?php echo _filemanager_folders ?>";
+					}
+					if (fileItemsLength > 0) {
+							message = message + " " + fileItemsLength + " " + "<?php echo _filemanager_files ?>";
+					}
+					if (confirm(message+" ?")) {
 						var postForm2 = fileManager.document.getElementById('form2');
 						for (var i=0; i<folderItemsLength; i++) {
 								var strId = folderItems[i].getAttribute("id").toString();
@@ -344,97 +245,193 @@ else
 								postForm2.appendChild(i_field);
 						}
 						changeLoadingStatus('load');
-						postForm2.elements["action"].value="move";
+						postForm2.elements["action"].value="delete";
 						postForm2.submit();
+					}
 				}
 
-				function openFile() {
-						var urlPrefix = "<?php echo $MY_URL_TO_OPEN_FILE; ?>";
-						var myPath = fileManager.document.getElementById('form2').elements["path"].value;
+				function renameFile() {
 						var folderItems = fileManager.sta.getSelectedItems();
 						var folderItemsLength = folderItems.length;
 						var fileItems = fileManager.stb.getSelectedItems();
 						var fileItemsLength = fileItems.length;
-
+						var postForm2 = fileManager.document.getElementById('form2');
+						if ((folderItemsLength == 0) && (fileItemsLength == 0)) return false;
+						if (!confirm('<?php echo _filemanager_renamewarning ?>')) return false;
 						for (var i=0; i<folderItemsLength; i++) {
-								var strId = folderItems[i].getAttribute("id").toString();
-								var trId = parseInt(strId.substring(1, strId.length));
-							window.open(urlPrefix+myPath+fileManager.folderJSArray[trId][1],'','');
+							var strId = folderItems[i].getAttribute("id").toString();
+							var trId = parseInt(strId.substring(1, strId.length));
+							var newname = prompt('<?php echo _filemanager_renamefolder ?>', fileManager.folderJSArray[trId][1]);
+							if (!newname) continue;
+							if (!newname == fileManager.folderJSArray[trId][1]) continue;
+							var i_field = fileManager.document.createElement('INPUT');
+							i_field.type = 'hidden';
+							i_field.name = 'folders[' + i.toString() + '][oldname]';
+							i_field.value = fileManager.folderJSArray[trId][1];
+							postForm2.appendChild(i_field);
+							var ii_field = fileManager.document.createElement('INPUT');
+							ii_field.type = 'hidden';
+							ii_field.name = 'folders[' + i.toString() + '][newname]';
+							ii_field.value = newname;
+							postForm2.appendChild(ii_field);
 						}
 						for (var i=0; i<fileItemsLength; i++) {
-								var strId = fileItems[i].getAttribute("id").toString();
-								var trId = parseInt(strId.substring(1, strId.length));
-								window.open(urlPrefix+myPath+fileManager.fileJSArray[trId][1],'','');
+							var strId = fileItems[i].getAttribute("id").toString();
+							var trId = parseInt(strId.substring(1, strId.length));
+							var newname = getNewFileName(fileManager.fileJSArray[trId][1]);
+							if (!newname) continue;
+							if (newname == fileManager.fileJSArray[trId][1]) continue;
+							var i_field = fileManager.document.createElement('INPUT');
+							i_field.type = 'hidden';
+							i_field.name = 'files[' + i.toString() + '][oldname]';
+							i_field.value = fileManager.fileJSArray[trId][1];
+							postForm2.appendChild(i_field);
+							var ii_field = fileManager.document.createElement('INPUT');
+							ii_field.type = 'hidden';
+							ii_field.name = 'files[' + i.toString() + '][newname]';
+							ii_field.value = newname;
+							postForm2.appendChild(ii_field);
 						}
+						changeLoadingStatus('load');
+						postForm2.elements["action"].value="rename";
+						postForm2.submit();
+				}
+
+				function moveFile() {
+					var folderItems = fileManager.sta.getSelectedItems();
+					var folderItemsLength = folderItems.length;
+					var fileItems = fileManager.stb.getSelectedItems();
+					var fileItemsLength = fileItems.length;
+					var postForm2 = fileManager.document.getElementById('form2');
+					if ((folderItemsLength == 0) && (fileItemsLength == 0)) return false;
+					if (!confirm('<?php echo _filemanager_renamewarning ?>')) return false;
+					var postForm2 = fileManager.document.getElementById('form2');
+					Dialog("move.php", function(param) {
+							if (!param) // user must have pressed Cancel
+									return false;
+							else {
+								postForm2.elements["newpath"].value=param['newpath'];
+								moveFiles();
+							}
+					}, null);
+				}
+
+				function moveFiles() {
+					var folderItems = fileManager.sta.getSelectedItems();
+					var folderItemsLength = folderItems.length;
+					var fileItems = fileManager.stb.getSelectedItems();
+					var fileItemsLength = fileItems.length;
+					var postForm2 = fileManager.document.getElementById('form2');
+					for (var i=0; i<folderItemsLength; i++) {
+							var strId = folderItems[i].getAttribute("id").toString();
+							var trId = parseInt(strId.substring(1, strId.length));
+							var i_field = fileManager.document.createElement('INPUT');
+							i_field.type = 'hidden';
+							i_field.name = 'folders[' + i.toString() + ']';
+							i_field.value = fileManager.folderJSArray[trId][1];
+							postForm2.appendChild(i_field);
+					}
+					for (var i=0; i<fileItemsLength; i++) {
+							var strId = fileItems[i].getAttribute("id").toString();
+							var trId = parseInt(strId.substring(1, strId.length));
+							var i_field = fileManager.document.createElement('INPUT');
+							i_field.type = 'hidden';
+							i_field.name = 'files[' + i.toString() + ']';
+							i_field.value = fileManager.fileJSArray[trId][1];
+							postForm2.appendChild(i_field);
+					}
+					changeLoadingStatus('load');
+					postForm2.elements["action"].value="move";
+					postForm2.submit();
+				}
+
+				function openFile() {
+					var urlPrefix = "<?php echo $MY_URL_TO_OPEN_FILE; ?>";
+					var myPath = fileManager.document.getElementById('form2').elements["path"].value;
+					var folderItems = fileManager.sta.getSelectedItems();
+					var folderItemsLength = folderItems.length;
+					var fileItems = fileManager.stb.getSelectedItems();
+					var fileItemsLength = fileItems.length;
+
+					for (var i=0; i<folderItemsLength; i++) {
+						var strId = folderItems[i].getAttribute("id").toString();
+						var trId = parseInt(strId.substring(1, strId.length));
+						window.open(urlPrefix+myPath+fileManager.folderJSArray[trId][1],'','');
+					}
+					for (var i=0; i<fileItemsLength; i++) {
+						var strId = fileItems[i].getAttribute("id").toString();
+						var trId = parseInt(strId.substring(1, strId.length));
+						window.open(urlPrefix+myPath+fileManager.fileJSArray[trId][1],'','');
+					}
 				}
 
 				function doUpload() {
-						var isOK = 1;
-						var fileObj = document.forms[0].uploadFile;
-						if (fileObj == null) return false;
+					var isOK = 1;
+					var fileObj = document.forms[0].uploadFile;
+					if (fileObj == null) return false;
 
-						newname = fileObj.value;
-						isOK = checkExtension(newname);
-						if (isOK == -2) {
-								alert('<?php echo _filemanager_extnotallowed ?>');
-								return false;
-						}
-						if (isOK == -1) {
-								alert('<?php echo _filemanager_extmissing ?>');
-								return false;
-						}
-						changeLoadingStatus('upload');
+					newname = fileObj.value;
+					isOK = checkExtension(newname);
+					if (isOK == -2) {
+							alert('<?php echo _filemanager_extnotallowed ?>');
+							return false;
+					}
+					if (isOK == -1) {
+							alert('<?php echo _filemanager_extmissing ?>');
+							return false;
+					}
+					changeLoadingStatus('upload');
 				}
 				function getExtension(name) {
-						var regexp = /\/|\\/;
-						var parts = name.split(regexp);
-						var filename = parts[parts.length-1].split(".");
-						if (filename.length <= 1) {
-								return(-1);
-						}
-						var ext = filename[filename.length-1].toLowerCase();
-						return ext;
+					var regexp = /\/|\\/;
+					var parts = name.split(regexp);
+					var filename = parts[parts.length-1].split(".");
+					if (filename.length <= 1) {
+							return(-1);
+					}
+					var ext = filename[filename.length-1].toLowerCase();
+					return ext;
 				}
 
 				function checkExtension(name) {
-						var regexp = /\/|\\/;
-						var parts = name.split(regexp);
-						var filename = parts[parts.length-1].split(".");
-						if (filename.length <= 1) {
-								return(-1);
-						}
-						var ext = filename[filename.length-1].toLowerCase();
+					var regexp = /\/|\\/;
+					var parts = name.split(regexp);
+					var filename = parts[parts.length-1].split(".");
+					if (filename.length <= 1) {
+							return(-1);
+					}
+					var ext = filename[filename.length-1].toLowerCase();
 
-						for (i=0; i<DenyExtensions.length; i++) {
-								if (ext == DenyExtensions[i]) return(-2);
-						}
-						for (i=0; i<AllowExtensions.length; i++) {
-								if (ext == AllowExtensions[i])        return(1);
-						}
-						return(-2);
+					for (i=0; i<DenyExtensions.length; i++) {
+							if (ext == DenyExtensions[i]) return(-2);
+					}
+					for (i=0; i<AllowExtensions.length; i++) {
+							if (ext == AllowExtensions[i])        return(1);
+					}
+					return(-2);
 				}
 				function getNewFileName(name) {
-						var isOK = 1;
-						var newname='';
-						do {
-								newname = prompt('<?php echo _filemanager_renamefile ?>', name);
-								if (!newname) return false;
-								isOK = checkExtension(newname);
-								if (isOK == -2) alert('<?php echo _filemanager_extnotallowed ?>');
-								if (isOK == -1) alert('<?php echo _filemanager_extmissing ?>');
-						} while (isOK != 1);
-						return(newname);
+					var isOK = 1;
+					var newname='';
+					do {
+							newname = prompt('<?php echo _filemanager_renamefile ?>', name);
+							if (!newname) return false;
+							isOK = checkExtension(newname);
+							if (isOK == -2) alert('<?php echo _filemanager_extnotallowed ?>');
+							if (isOK == -1) alert('<?php echo _filemanager_extmissing ?>');
+					} while (isOK != 1);
+					return(newname);
 				}
 
 				function selectFolder() {
-						Dialog("move.php", function(param) {
-								if (!param) // user must have pressed Cancel
-										return false;
-								else {
-										var postForm2 = fileManager.document.getElementById('form2');
-										postForm2.elements["newpath"].value=param['newpath'];
-								}
-						}, null);
+					Dialog("move.php", function(param) {
+							if (!param) // user must have pressed Cancel
+									return false;
+							else {
+									var postForm2 = fileManager.document.getElementById('form2');
+									postForm2.elements["newpath"].value=param['newpath'];
+							}
+					}, null);
 
 				}
 
@@ -444,21 +441,21 @@ else
 				}
 
 				function winH() {
-				if (window.innerHeight)
-					return window.innerHeight;
-				else if
-				(document.documentElement &&
-				document.documentElement.clientHeight)
-					return document.documentElement.clientHeight;
-				else if
-				(document.body && document.body.clientHeight)
-					return document.body.clientHeight;
-				else
-					return null;
+					if (window.innerHeight)
+						return window.innerHeight;
+					else if
+					(document.documentElement &&
+					document.documentElement.clientHeight)
+						return document.documentElement.clientHeight;
+					else if
+					(document.body && document.body.clientHeight)
+						return document.body.clientHeight;
+					else
+						return null;
 				}
 
 				function resize_iframe() {
-						document.getElementById("fileManager").height=winH()-resize_iframe_constant;//resize the iframe according to the size of the window
+					document.getElementById("fileManager").height=winH()-resize_iframe_constant;//resize the iframe according to the size of the window
 				}
 
 				function MM_findObj(n, d) { //v4.01
