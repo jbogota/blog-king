@@ -8,19 +8,6 @@ Author: Georg Leciejewski
 Author URI:http://www.website-king.de
 */
 
-/**
-*
-* 	weitere core file probleme : (Suche nach "wp-content/plugins/" )
-*
-* BE CAREFULL:
-* The Constant $current_king_plugin is used in several locations and needs to be set in the (Meta)Plugins File
-* affected plugin-options are :
-* 	- Plugin path -> king-$current_king_plugin/plugins   always put your specific plugins there
-* 	- db-options (active Plugins) are called active_$current_king_plugin_plugins
-* 	-
-*
-*/
-//$current_king_plugin=$_GET['current_king_plugin'];
 require_once('admin.php');
 
 //if the locatoin redirect underneath comes in we don?t want to loose the variable
