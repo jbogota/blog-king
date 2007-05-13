@@ -252,7 +252,7 @@ function widget_king_pages_init() {
 				'Label_Id_Name' =>"king_pages_depth_$number",
 				'Description' 	=>  __('Show till Sub-Level', 'widgetKing'),
 				'Label_Title' 	=> __('Numeric value for how many levels of hierarchy (sub-pages) to display. Defaults to 0 (display all pages)', 'widgetKing'),
-				'Value' 		=> $exclude,
+				'Value' 		=> $depth,
 				'Size' 			=>'3',
 				'Max' 			=>'3'));
 		echo king_get_tab_section('pages'.$number.'-1');

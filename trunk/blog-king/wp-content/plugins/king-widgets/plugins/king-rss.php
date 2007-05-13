@@ -46,25 +46,26 @@ function widget_king_rss_init() {
 		# the active theme: before_widget, before_title, after_widget,
 		# and after_title are the array keys. Default tags: li and h2.
 			extract($args,EXTR_PREFIX_ALL,"default");
-			$options 			= get_option('widget_king_rss');
-			$rss_url			= $options[$number]['rss_url'];
-			$max_items			= $options[$number]['max_items'];
-			$clearcache			= $options[$number]['clearcache'] ? 1 : 0;
-			$shortdesc			= $options[$number]['shortdesc'];
-			$showdate			= $options[$number]['showdate'];
-			$error				= $options[$number]['error'];
-			$rsshtml			= $options[$number]['rsshtml'];
-			$titlehtml			= $options[$number]['titlehtml'];
-			$stripads			= $options[$number]['stripads'];
+			$options 				= get_option('widget_king_rss');
+			$data['rss_url']		= $options[$number]['rss_url'];
+			$data['max_items']		= $options[$number]['max_items'];
+			$data['cache_time']		= $options[$number]['cache_time'];
+			$data['nosort']			= $options[$number]['nosort']? 1 : 0;
+			$data['shortdesc']		= $options[$number]['shortdesc'];
+			$data['showdate']		= $options[$number]['showdate'];
+			$data['error']			= $options[$number]['error'];
+			$data['rsshtml']		= $options[$number]['rsshtml'];
+			$data['titlehtml']		= $options[$number]['titlehtml'];
+			$data['stripads']		= $options[$number]['stripads'];
 
-			$show_category		= $options[$number]['show_category'] ? 1 : 0;
-			$category_id		= $options[$number]['category_id'];
-			$show_on_site_area	= $options[$number]['show_on_site_area'] ? 1 : 0;
+			$show_category			= $options[$number]['show_category'] ? 1 : 0;
+			$category_id			= $options[$number]['category_id'];
+			$show_on_site_area		= $options[$number]['show_on_site_area'] ? 1 : 0;
 			$show_not_on_site_area	= $options[$number]['show_not_on_site_area'] ? 1 : 0;
-			$site_area_id		= $options[$number]['site_area_id'];
-			$site_area			= $options[$number]['site_area'];
-			$before_widget		= empty($options[$number]['before_widget']) ? $default_before_widget : stripslashes($options[$number]['before_widget']);
-			$after_widget 		= empty($options[$number]['after_widget']) ? $default_after_widget : stripslashes($options[$number]['after_widget']) ;
+			$site_area_id			= $options[$number]['site_area_id'];
+			$site_area				= $options[$number]['site_area'];
+			$before_widget			= empty($options[$number]['before_widget']) ? $default_before_widget : stripslashes($options[$number]['before_widget']);
+			$after_widget 			= empty($options[$number]['after_widget']) ? $default_after_widget : stripslashes($options[$number]['after_widget']) ;
 
 		# These lines generate our output. Widgets can be very complex
 		# but as you can see here, they can also be very, very simple.
@@ -76,7 +77,7 @@ function widget_king_rss_init() {
 				#if in category
 				echo '<!-- Start King RSS ' . $number . ' -->'."\n";
 				echo $before_widget."\n";
-				echo kingRssOutput($rss_url,$max_items,$clearcache,$shortdesc,$showdate,$error,$rsshtml,$titlehtml,$stripads) . "\n";
+				echo kingRssOutput($data) . "\n";
 				echo $after_widget."\n";
 				echo '<!-- End King RSS ' . $number . ' -->'."\n";
 				$already_out = 1;
@@ -90,7 +91,7 @@ function widget_king_rss_init() {
 				#if in the site area
 				echo '<!-- Start King RSS ' . $number . ' -->'."\n";
 				echo $before_widget."\n";
-				echo kingRssOutput($rss_url,$max_items,$clearcache,$shortdesc,$showdate,$error,$rsshtml,$titlehtml,$stripads) . "\n";
+				echo kingRssOutput($data) . "\n";
 				echo $after_widget."\n";
 				echo '<!-- End King RSS ' . $number . ' -->'."\n";
 			}#else{}
@@ -99,7 +100,7 @@ function widget_king_rss_init() {
 			if (!$site_area($site_area_id) && $already_out != 1){
 				#if not in the site area
 				echo $before_widget."\n";;
-				echo kingRssOutput($rss_url,$max_items,$clearcache,$shortdesc,$showdate,$error,$rsshtml,$titlehtml,$stripads) . "\n";
+				echo kingRssOutput($data) . "\n";
 				echo $after_widget."\n";
 				echo '<!-- End King RSS ' . $number . ' -->'."\n";
 				}#else{}
@@ -108,7 +109,7 @@ function widget_king_rss_init() {
 		if(empty($show_not_on_site_area) && empty($show_on_site_area) && empty($show_category)){
 			echo '<!-- Start King RSS ' . $number . ' -->';
 			echo $before_widget."\n";
-			echo kingRssOutput($rss_url,$max_items,$clearcache,$shortdesc,$showdate,$error,$rsshtml,$titlehtml,$stripads) . "\n";
+			echo kingRssOutput($data) . "\n";
 			echo $after_widget."\n";
 			echo '<!-- End King RSS ' . $number . ' -->'."\n";
 		}
@@ -125,8 +126,9 @@ function widget_king_rss_init() {
 
 		if ( $_POST["king_rss_submit_$number"] ){
 
-			#if defaults are choosen
-			if ( isset($_POST["king_rss_defaults_$number"]) ){
+
+			if ( isset($_POST["king_rss_defaults_$number"]) )
+			{#if defaults are choosen
 				if(!empty($_POST["king_rss_url_$number"])){
 					$newoptions[$number]['rss_url']	= strip_tags(stripslashes($_POST["king_rss_url_$number"]));
 				} else{
@@ -138,15 +140,18 @@ function widget_king_rss_init() {
 				$newoptions[$number]['error']				= "Sorry can not grab the Feed!";
 				$newoptions[$number]['titlehtml'] 			= '<h2><a class="rsswidget" href="%rssurl%" title="Syndicate this content"><img src="%rssicon%" alt="RSS" height="14" width="14"/></a>
 <a class="rsswidget" href="%link%" title="%descr%">%title%</a></h2><ul>';
-			$newoptions[$number]['rsshtml'] 			= '<li><strong>%date%</strong><br /><a class="rsswidget" href="%link%" title="%text%">%title%</a></li>';
+				$newoptions[$number]['rsshtml'] 			= '<li><strong>%date%</strong><br /><a class="rsswidget" href="%link%" title="%text%">%title%</a></li>';
 				$newoptions[$number]['before_widget']		= '<li class="widget">';
 				$newoptions[$number]['after_widget']		= "</ul></li>";
-			}elseif($_POST["king_rss_copy_$number"] !=='No' && $_POST["king_rss_copy_$number"] != $number){
+			}
+			elseif($_POST["king_rss_copy_$number"] !=='No' && $_POST["king_rss_copy_$number"] != $number)
+			{# doe the copying
 				$copy = $_POST["king_rss_copy_$number"]; #$copyoption
 				$newoptions[$number]['title']				= $options[$copy]['title'];
 				$newoptions[$number]['rss_url'] 			= $options[$copy]['rss_url'];
 				$newoptions[$number]['max_items'] 			= $options[$copy]['max_items'];
-				$newoptions[$number]['clearcache']			= $options[$copy]['clearcache'];
+				$newoptions[$number]['cache_time']			= $options[$copy]['cache_time'];
+				$newoptions[$number]['nosort']				= $options[$copy]['nosort'];
 				$newoptions[$number]['shortdesc']			= $options[$copy]['shortdesc'];
 				$newoptions[$number]['showdate']			= $options[$copy]['showdate'];
 				$newoptions[$number]['error']				= $options[$copy]['error'];
@@ -161,11 +166,14 @@ function widget_king_rss_init() {
 				$newoptions[$number]['site_area_id']		= $options[$copy]['site_area_id'];
 				$newoptions[$number]['before_widget']		= $options[$copy]['before_widget'];
 				$newoptions[$number]['after_widget']		= $options[$copy]['after_widget'];
-			}else{# insert new form values
+			}
+			else
+			{# insert new form values
 				$newoptions[$number]['title']				= strip_tags(stripslashes($_POST["king_rss_title_$number"]));
 				$newoptions[$number]['rss_url'] 			= strip_tags(stripslashes($_POST["king_rss_url_$number"]));
 				$newoptions[$number]['max_items'] 			= strip_tags(stripslashes($_POST["king_rss_max_items_$number"]));
-				$newoptions[$number]['clearcache']			= isset($_POST["king_rss_clearcache_$number"]);
+				$newoptions[$number]['cache_time']			= isset($_POST["king_rss_cache_time_$number"]);
+				$newoptions[$number]['nosort']				= isset($_POST["king_rss_nosort_$number"]);
 				$newoptions[$number]['shortdesc']			= $_POST["king_rss_shortdesc_$number"];
 				$newoptions[$number]['showdate']			= $_POST["king_rss_showdate_$number"]; #php time format
 				$newoptions[$number]['error']				= strip_tags(stripslashes($_POST["king_rss_error_$number"]));
@@ -191,7 +199,8 @@ function widget_king_rss_init() {
 		$title 				= htmlspecialchars($options[$number]['title'], ENT_QUOTES);
 		$rss_url	 		= htmlspecialchars($options[$number]['rss_url'], ENT_QUOTES);
 		$max_items			= $options[$number]['max_items'];
-		$clearcache 		= $options[$number]['clearcache']; # not checked when back in again, since only needed once
+		$cache_time 		= $options[$number]['cache_time'];
+		$nosort				= $options[$number]['nosort'] ? 'checked' : '';
 		$shortdesc 			= $options[$number]['shortdesc'];
 		$showdate			= $options[$number]['showdate'];
 		$error				= htmlspecialchars($options[$number]['error'], ENT_QUOTES);
@@ -252,18 +261,26 @@ function widget_king_rss_init() {
 				'Label_Title' 	=> __('The error Message shown if the feed cant be fetched', 'widgetKing'),
 				'Value' 		=> $error,
 				'Max' 			=>'60'));
+        # sort order
+		echo king_get_checkbox_p(array(
+				'Label_Id_Name' =>"king_rss_nosort_$number",
+				'Description' 	=> __('Do not sort Feed', 'widgetKing'),
+				'Label_Title' 	=>  __('Prevent sorting the feed by the time of its items. f.ex. used when grabbing a google calendar feed', 'widgetKing'),
+				'Value' 		=>$nosort));
 		# strip Ads
 		echo king_get_checkbox_p(array(
 				'Label_Id_Name' =>"king_rss_stripads_$number",
 				'Description' 	=> __('Strip Ads', 'widgetKing'),
 				'Label_Title' 	=>  __('Strip out Feed-Ads from Google/Pheedo/Doubleclicks.', 'widgetKing'),
 				'Value' 		=>$stripads));
-		# Clear Cache
-		echo king_get_checkbox_p(array(
-				'Label_Id_Name' =>"king_rss_clearcache_$number",
-				'Description' 	=> __('Clear local Feed Cache', 'widgetKing'),
-				'Label_Title' 	=>  __('If checked FeedCache will be cleared. Save the Widget again after setting this switch. So the cache clearing will be disabled again!', 'widgetKing'),
-				'Value' 		=>$clearcache));
+        #cache time
+		echo king_get_textbox_p(array(
+				'Label_Id_Name' =>"king_rss_cache_time_$number",
+				'Description' 	=> __('Refresh the feed every Minutes', 'widgetKing'),
+				'Label_Title' 	=>  __('The Feed will be refreshed every given Minutes. If the feed does not update frequently set a high value, else make it grab the feed more often. Default is 60 minutes, if left empty', 'widgetKing'),
+				'Class'			=>'small',
+				'Value' 		=>$cache_time));
+
 		# set to defaults
 		echo king_get_checkbox_p(array(
 				'Label_Id_Name' =>"king_rss_defaults_$number",
@@ -414,16 +431,19 @@ if (isset($_GET['i']) && !empty($_GET['i'])) {
 * @desc Output Parsing of RSS
 * @author Georg Leciejewski
 */
-function kingRssOutput($rss_url,$max_items,$clearcache,$shortdesc='',$showdate,$error,$rsshtml,$titlehtml,$stripads) {
+//function kingRssOutput($rss_url,$max_items,$clearcache,$shortdesc='',$showdate,$error,$rsshtml,$titlehtml,$stripads) {
+function kingRssOutput($data) {
 
 	$feed = new SimplePie();
-	$feed->feed_url($rss_url);
+	$feed->feed_url($data['rss_url']);
 	$path = explode($_SERVER["SERVER_NAME"], get_bloginfo('wpurl'));
 	$feed->cache_location($_SERVER['DOCUMENT_ROOT'] . $path[1] . "/wp-content/cache");
 
-	if (!empty($clearcache))	$feed->clear_cache($feed->cache_location,0);
 
-	if (!empty($stripads))	$feed->strip_ads(1);
+	if(!empty($data['cache_time'])) $feed->max_minutes = $data['cache_time'];
+	if(!empty($data['nosort'])) $feed->order_by_date = false;
+
+	if (!empty($data['stripads']))	$feed->strip_ads(1);
 
 	$feed->bypass_image_hotlink();
 	$feed->bypass_image_hotlink_page($path[1] . "/index.php"); #if images in feed are protected
@@ -434,7 +454,7 @@ function kingRssOutput($rss_url,$max_items,$clearcache,$shortdesc='',$showdate,$
 		$replace_title_vars[0] = $feed->get_feed_link();
 		$replace_title_vars[1] = $feed->get_feed_title();
 		$replace_title_vars[2] = $feed->get_feed_description();
-		$replace_title_vars[3] = $rss_url;
+		$replace_title_vars[3] = $data['rss_url'];
 		$replace_title_vars[4] = get_settings('siteurl').'/wp-content/plugins/king-includes/images/rss.png';
 
 		if($feed->get_image_exist() == true ){
@@ -442,17 +462,16 @@ function kingRssOutput($rss_url,$max_items,$clearcache,$shortdesc='',$showdate,$
 		}
 		$search_title_vars =array('%link%','%title%','%descr%','%rssurl%','%rssicon%','%feedimg%');
 		#parse template placeholders
-		$output .= str_replace($search_title_vars, $replace_title_vars, $titlehtml);
+		$output .= str_replace($search_title_vars, $replace_title_vars, $data['titlehtml']);
 
-		#$output .= '<ul>';
 		$max = $feed->get_item_quantity();
-		if (isset($max_items) && !empty($max_items)) $max = min($max_items, $feed->get_item_quantity());
+		if (!empty($data['max_items'])) $max = min($data['max_items'], $feed->get_item_quantity());
 
 		for($x=0; $x<$max; $x++) {
 			$item = $feed->get_item($x);
 			$replace_vars[0] = stupifyEntities($item->get_title());
 			$replace_vars[1] = $item->get_permalink();
-			$replace_vars[2] = $item->get_date($showdate);
+			$replace_vars[2] = $item->get_date($data['showdate']);
 			$replace_vars[3] = stupifyEntities($item->get_description());
 
 			if($item->get_categories() != false){
@@ -466,10 +485,10 @@ function kingRssOutput($rss_url,$max_items,$clearcache,$shortdesc='',$showdate,$
 			}
 
 			# cut article text to length ... do the butcher
-			if (isset($shortdesc) && !empty($shortdesc)) {
+			if (!empty($data['shortdesc'])) {
 				$suffix = '...';
 				$short_desc = trim(str_replace("\n", ' ', str_replace("\r", ' ', strip_tags(stupifyEntities($item->get_description())))));
-				$desc = substr($short_desc, 0, $shortdesc);
+				$desc = substr($short_desc, 0, $data['shortdesc']);
 				$lastchar = substr($desc, -1, 1);
 				if ($lastchar == '.' || $lastchar == '!' || $lastchar == '?') $suffix='';
 					$desc .= $suffix;
@@ -479,16 +498,14 @@ function kingRssOutput($rss_url,$max_items,$clearcache,$shortdesc='',$showdate,$
 			}
 			$search_vars = array('%title%','%link%','%date%','%text%','%category%','%author%');
 			#parse template placeholders
-			$output .= str_replace($search_vars, $replace_vars, $rsshtml);
+			$output .= str_replace($search_vars, $replace_vars, $data['rsshtml']);
 		}
 
-		#$output .= '</ul>';
 	}else{
-		if (isset($error) && !empty($error)) $output = $error;
+		if (!empty($data['error'])) $output = $data['error'];
 		else if (isset($feed->error)) $output = $feed->error;
 
 	}
-
 	return $output;
 }
 
