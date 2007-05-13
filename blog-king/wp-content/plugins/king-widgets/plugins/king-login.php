@@ -368,7 +368,7 @@ function king_login_output($redirect='',$postlink='',$logout='',$myposts='')
 		}
         if(!empty($myposts))
         {
-			echo '<li><a href="'. get_author_link(0,$user_ID,$user_login) . '">'. __('My Articles') . '</a></li>'."\n";
+			echo '<li><a href="'. get_author_posts_url($user_ID) . '">'. __('My Articles') . '</a></li>'."\n";
 		}
 		if(!empty($logout))
 		{
