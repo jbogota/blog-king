@@ -1,6 +1,6 @@
 <html><head /><body>
 <?php
-require_once('../../../wp-config.php');
+require_once('../../../../../wp-config.php');
 global $sk2_log;
 include_once(dirname(__FILE__) . "/sk2_core_class.php");
 
