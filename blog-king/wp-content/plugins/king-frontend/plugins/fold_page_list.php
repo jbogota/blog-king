@@ -164,7 +164,7 @@ function wswwpx_fold_page_list ($args = '', $fullunfold=false) {
 	if ( $pages ) :
 
 	if ( $r['title_li'] )
-		echo '<li id="pagenav">' . $r['title_li'] . '<ul>';
+		echo '<li id="pagenav"><ul>';
 	// Now loop over all pages that were selected
 	$page_tree = Array();
 	foreach($pages as $page) {
